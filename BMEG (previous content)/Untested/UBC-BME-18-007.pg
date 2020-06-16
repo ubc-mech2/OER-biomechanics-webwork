@@ -1,0 +1,72 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Kinetics of particles)
+## DBsection(Linear impulse and momentum)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$m = random(40,60,1);
+$head = random(200,250,1);
+$e = random(.7,.8,.01);
+$v = random(30,50,1);
+
+#computation 
+$vf = ($head*$v + $head*$e*$v)/($m + $head);
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+A [`[$m]`] [`g`] golf ball is struck by a [`[$head]`] [`g`] golf club. Immediately before the impact, the club head's velocity is [`[$v]`] [`m/s`]. How fast is will the ball move immediately after impact if the coefficient of restitution between the club head and ball is [`[$e]`]?
+
+[`v=`] [_____]{"$vf"} [`m/s`]  
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();

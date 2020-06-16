@@ -1,0 +1,87 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Kinetics of particles)
+## DBsection(Linear impulse and momentum)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$mt = random(60,70,.1);
+$mn = random(50,60,.1);
+$f = random(1000,2000,10);
+$vt = random(4,8,.1);
+$vn = -random(6,10,.1);
+
+#computation 
+$at = -$f/$mt;
+$an = $f/$mn;
+$v = ($mt*$vt+$mn*$vn)/($mn+$mt);
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+During figure skating practice, Tonya crashes into Nancy. The moment before the collision occurs, Tonya and Nancy's velocities are [`[$vt]`] [`m/s`] and [`[$vn]`] [`m/s`] respectively. During the collision, an average force of [`[$f]`] [`N`] is exerted by Tonya against Nancy. Tonya and Nancy's masses are [`[$mt]`] [`kg`] and [`[$mn]`] [`kg`] respectively. 
+
+*a)* What is the average force exerted by Nancy against Tonya during the collision?
+
+[`F=`] [_____]{"$f"} [`N`]  
+
+*b)* Consider this to be the only horizontal force acting on each skater during the collision. What is the average horizontal acceleration Tonya and Nancy experience during the collision?
+
+[`a_T=`] [_____]{"$at"} [`m/s^2`]  
+[`a_N=`] [_____]{"$an"} [`m/s^2`]  
+
+*c)* How fast will Tonya and Nancy be moving immediately after the collision if this is a perfectly inelastic collision?
+
+
+[`v=`] [_____]{"$v"} [`m/s`]  
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();

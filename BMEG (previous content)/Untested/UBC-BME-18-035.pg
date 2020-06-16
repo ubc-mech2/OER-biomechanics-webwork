@@ -1,0 +1,73 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Kinetics of particles)
+## DBsection(Impact)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$mball = random(.15,.25,.01);
+$mbat = random(1,1.2,.1);
+$v = random(40,50,1);
+$e = random(.4,.6,.01);
+
+#computation 
+$dvf = $e*2*$v;
+$vf = ($mball*-$v+$mbat*$v+$mbat*$dvf)/($mbat+$mball);
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+A baseball is struck by a bat. The [`[$mball]`] [`kg`] ball has a velocity of [`[$v]`] [`m/s`] immediately prior to being hit. The center of mass of the [`[$mbat]`] [`kg`] bat is travelling with the same velocity of [`[$v]`] [`m/s`] immediately prior to the hit, but in the opposite direction. If the coefficient of restitution between the bat and the ball is [`[$e]`], how fast is the baseball moving as it leaves the bat after the collision?
+
+[`v=`] [_____]{"$vf"} [`m/s`]  
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();

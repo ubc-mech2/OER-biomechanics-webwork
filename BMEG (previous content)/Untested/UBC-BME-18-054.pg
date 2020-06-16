@@ -1,0 +1,89 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Planar kinetics of rigid bodies)
+## DBsection(Angular impulse and momentum)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$m = random(40,60,1);
+$k2 = random(.1,.2,.01);
+$k1 = random(.2,.3,.01);
+$l = random(15,25,1);
+
+#computation 
+$moi1 = $m*$k1**2;
+$omega1 = $l/$moi1;
+$moi2 = $m*$k2**2;
+$omega2 = $l/$moi2;
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+Lily is a diver with a mass of [`[$m]`] [`kg`]. Her angular momentum about her transverse axis is [`[$l]`] [`kg\cdot m^2/s`] at the instant of takeoff. At this same instant, her radius of gyration about the transverse axis is [`[$k1]`] [`m`]. At some point during the dive, Lily reduces her radius of gyration about the transverse axis to [`[$k2]`] [`m`] by tucking. 
+
+*a)* What is Lily's moment of inertia about her transverse axis at takeoff?
+
+[`I_i`] [_____]{"$moi1"} [`kg\cdot m^2`]  
+
+*b)* What is Lily's angular velocity about the transverse axis at takeoff?
+
+[`\omega_i=`] [_____]{"$omega1"} [`rad/s`]  
+
+*c)* What is Lily's moment of inertia about her transverse axis after she tucks?
+
+[`I_f=`] [_____]{"$moi2"} [`kg\cdot m^2`]  
+
+*d)* What is Lily's angular velocity about the transverse axis after she tucks?
+
+[`\omega_f=`] [_____]{"$omega2"} [`rad/s`]  
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();

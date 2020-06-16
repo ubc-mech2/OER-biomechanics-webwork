@@ -1,0 +1,85 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Kinetics of particles)
+## DBsection(Linear impulse and momentum)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$m = random(80,100,1);
+$vd = random(4,6,.1);
+$vu = random(3,5,.1);
+$t = random(.4,.6,.01);
+
+#computation 
+$i = $m*($vd+$vu);
+$f = $i/$t;
+$r = $f + $m*9.81;
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+Peter, a [`[$m]`] [`kg`] basketball player, lands on his feet after a slam dunk and then jumps up to celebrate his basket. When he first lands after the dunk, his velocity is [`[$vd]`] [`m/s`] downward; [`[$t]`] [`s`] later his feet leave the floor when he jumps back up, his velocity now [`[$vu]`] [`m/s`] upward. During the [`[$t]`] [`s`] Peter is touching the ground:
+
+*a)* What is the impulse exerted on him?
+
+[`I=`] [_____]{"$i"} [`N\cdot s`]  
+
+*b)* What is the average net force exerted on him?
+
+[`F=`] [_____]{"$f"} [`N`]  
+
+*c)* What is the average reaction force exerted upward by the floor on him?
+
+[`R=`] [_____]{"$r"} [`N`]
+
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();

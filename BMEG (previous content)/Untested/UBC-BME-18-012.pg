@@ -1,0 +1,80 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Statics)
+## DBchapter(Rigid bodies)
+## DBsection(2D equilibrium)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+#image scale
+$imgScale = .2;
+
+#image aspect ratio
+$width = $imgScale*1792;
+$height = $imgScale*1183;
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$fj = random(200,400,1);
+$d1 = random(60,80,1);
+$d2 = random(30,50,1);
+
+#computation 
+$ft = $fj*$d1/$d2;
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+[@ image("UBC-BME-18-012.png", width=>[$width], height=>[$height]) @]*
+
+Two individuals arrived at a door at the same time. Jeff pushes from one side of the door with a horizontal force of [`F_J = [$fj]`] [`N`] in a location resulting in a moment arm [`d_1 = [$d1]`] [`cm`] from the hinges of the door. On the other side of the door, Ted is pushing in the opposite direction in a location resulting in a moment arm of [`d_2 = [$d2]`] [`cm`]. What is the force that Ted mush push the door if it is in static equilibrium?  
+
+[`F_T = `] [_____]{"$ft"} [`N`]
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();

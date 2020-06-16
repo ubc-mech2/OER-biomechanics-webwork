@@ -1,0 +1,79 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Kinematics of particles)
+## DBsection(Rectilinear motion)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$h = 27.43;
+$hi = random(.5,2,.01);
+
+#computation 
+$vi = sqrt(2*9.81*($h-$hi));
+$vf = sqrt($vi**2 + 2*9.81*$hi);
+$t = ($vi+$vf)/9.81; 
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+The Dallas Cowboys Stadium has video screens which only allow for [`[$h]`] [`m`] clearance between the field and the screen. During the first game played at the Cowboys Stadium, a punter's kick hit the video screen. Ignore air resistance when considering the following questions. 
+
+*a)* If the football was kicked from a height [`[$hi]`] [`m`] above the field, what is the minimum initial vertical velocity it would need to hit the video screen?
+
+[`v_i=`] [_____]{"$vi"} [`m/s`]  
+
+*b)* If there were no video screens in the way, what would be the hang time for a football kicked [`[$h]`] [`m`] high from an initial height of [`[$hi]`] [`m`] above the field?
+
+
+[`t=`] [_____]{"$t"} [`s`]  
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();

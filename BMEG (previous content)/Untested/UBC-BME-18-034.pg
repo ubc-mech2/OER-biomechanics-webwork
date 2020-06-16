@@ -1,0 +1,71 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Kinetics of particles)
+## DBsection(Impact)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+	"parserFunction.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+##############################################################
+#
+#  Setup
+#
+#
+
+Context("Numeric");
+
+#given
+$ew = random(.5,.6,.01);
+$ef = random(.3,.4,.01);
+$h = random(1.5,2.5,.01);
+
+#computation 
+$hb = $h*$ef*$ef;
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+#
+
+BEGIN_PGML
+
+Hockey pucks have differing coefficients of restitution based on temperature, with warm hockey pucks having a coefficient of restitution of [`[$ew]`], and frozen hockey pucks having a coefficient of restitution of only [`[$ef]`]. In the NHL, the pucks used during games are kept frozen and refs will retrieve a puck from the cooler when restarting play. During a game, a ref retrieves a puck but is informed by the equipment manager that several warm pucks were just put into the cooler and not game-ready. As a way to check whether he has a frozen, game-ready puck, the referee drops the puck from a height of [`[$h]`] [`m`] on its side. If the puck is frozen, how high should it bounce?
+
+[`h=`] [_____]{"$hb"} [`m`]  
+
+END_PGML
+
+##############################################################
+
+ENDDOCUMENT();
