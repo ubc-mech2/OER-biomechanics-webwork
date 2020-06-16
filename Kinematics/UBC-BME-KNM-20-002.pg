@@ -1,0 +1,107 @@
+##DESCRIPTION
+## Tutorial 3 Question 2
+##ENDDESCRIPTION
+
+##
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "parserMultiAnswer.pl",
+   "extraAnswerEvaluators.pl",
+   "contextFraction.pl",
+   "answerHints.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(t => 'Real');
+
+#$r = random(0.1, 1.2, 0.1);
+#$c = random(0.11, 0.78, 0.01);
+#$v = random(1, 1.5, 0.01);
+#$t = random(2, 6, 1);
+$r = 0.8;
+$multi = 0.45;
+$t = 3;
+$exp = 4/3;
+$S = Formula("$multi t^($exp)");
+
+
+$v = $S->D('t');
+$v_time = $v->eval(t=>$t);
+$a_t = $v->D('t');
+$a_t_time = $a_t->eval(t=>$t);
+$a_n = ($v_time**2)/$r;
+$a = sqrt(($a_t_time)**2 + ($a_n)**2);
+
+##############################################################
+#
+#  Text
+#
+#
+Context()->texStrings;
+BEGIN_TEXT
+Consider an object undergoing a rotational motion in the xy-plane about a fixed axis perpendicular to the plane of motion. Let O be a point in the x-y plane along the axis of rotation, and P is a fixed point on the object. Due to the rotation of the object, point P will move in a circular path with radius r = \($r\) m. The relative position of point P along its circular path is given as a function of time \($S\).
+$PAR
+$BBOLD image goes here $EBOLD
+$PAR
+Determine the magnitude of the linear velocity (v) of point P along its path.
+$PAR
+\(v\) = \{ ans_rule(10)\} \(m/s\)
+
+$PAR
+Determine the tangential (a_t), normal (a_n), and net acceleration $t s after the motion began. 
+$PAR
+\(a_t\) = \{ ans_rule(10)\} \(m/s^2\)
+$PAR
+\(a_n\) = \{ ans_rule(10)\} \(m/s^2\)
+$PAR
+\(Net\ Acceleration\) = \{ ans_rule(10)\} \(m/s^2\)
+$PAR
+END_TEXT
+
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS(num_cmp($v_time, reltol => 1)); # 1% tolerance
+ANS(num_cmp($a_t_time, reltol => 1)); # 1% tolerance
+ANS(num_cmp($a_n, reltol => 1)); # 1% tolerance
+ANS(num_cmp($a, reltol => 1)); # 1% tolerance
+
+# default tolerance is .01 or one percent.
+
+ENDDOCUMENT();        

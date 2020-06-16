@@ -1,0 +1,97 @@
+##DESCRIPTION
+## Tutorial 3 Question 5
+##ENDDESCRIPTION
+
+##
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "parserMultiAnswer.pl",
+   "extraAnswerEvaluators.pl",
+   "contextFraction.pl",
+   "answerHints.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(t => 'Real');
+
+
+$r = 0.5;
+$omega = 6;
+$alpha = 4;
+
+$a_i = - ($alpha * $r);
+$a_j = - ($omega**2 * $r);
+
+$a_Bi = $a_i + (-$omega**2 * $r);
+$a_Bj = -$alpha * $r;
+$a_B = sqrt($a_Bi**2 + $a_Bj**2);
+
+$a_Ai = $a_i + (-$alpha * $r); 
+$a_Aj = -($omega**2 * $r);
+$a_A = sqrt($a_Ai**2 + $a_Aj**2);
+
+##############################################################
+#
+#  Text
+#
+#
+Context()->texStrings;
+BEGIN_TEXT
+A bowling ball with radius \($r\ ft\) is thrown down the bowling alley as depicted below. The ball is rolling without slipping with an angular velocity of \($omega\ rad/s\) (counterclockwise) and with an angular acceleration of \($alpha\ rad/s^2\) (counterclockwise). 
+$PAR
+Determine the accelerations of point B and point A at the instant seen below. 
+$BR
+\{ image( "UBC-BME-KNM-20-005.png", width=>550, height=>160 ) \}
+$PAR
+\(a_B\) = \{ ans_rule(10)\} \(m/s^2\) $BR
+\(a_A\) = \{ ans_rule(10)\} \(m/s^2\) $BR
+$PAR
+
+\{ 
+knowlLink("Hint", 
+value=>'Apply the no-slip condition. What does this mean in terms of horizontal and vertical acceleration?') 
+\}
+
+END_TEXT
+Context()->normalStrings;
+##############################################################
+#
+#  Answers
+#
+
+ANS(num_cmp($a_B)); # 1% tolerance
+ANS(num_cmp($a_A)); # 1% tolerance
+# default tolerance is .01 or one percent.
+
+ENDDOCUMENT();        

@@ -1,0 +1,113 @@
+##DESCRIPTION
+## Tutorial 3 Question 3
+##ENDDESCRIPTION
+
+##
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "parserMultiAnswer.pl",
+   "extraAnswerEvaluators.pl",
+   "contextFraction.pl",
+   "answerHints.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->variables->add(t => 'Real');
+
+$theta0_deg = 75; 
+$theta0 = 75*pi/180;
+$tao = 3.5;
+$phi = 2*pi/$tao;
+$T = Formula(" $theta0*sin($phi*t)");
+$O = $T -> D('t');
+$A = $O -> D('t');
+
+$t1 = 0.5;
+$t2 = 1;
+
+##############################################################
+#
+#  Text
+#
+#
+Context()->texStrings;
+BEGIN_TEXT
+Consider an individual doing hip abduction motions, shown in the image below. In the frontal plane, point O is the axis of rotation of the hip joint, line OB and OC are the the positions of the leg when it is stretched out at the highest and lowest elevations, respectively, and are the limits for the leg's range of motion. Line OA represents the neutral position, where the angle between OA and OB is equal to the angle between OA and OC - this angle is \(\theta_0\ = $theta0_deg \circ\). 
+$PAR
+$BBOLD IMAGE GOES HERE $EBOLD
+$PAR
+Assuming the individual's leg motion is symmetrical with respect to line and the period of angular motion is \(\tau = $tao s\):
+$PAR
+$BITALIC Please answer all values to the third decimal place. $EITALIC
+$PAR
+A) Derive expressions for angular displacement \(\theta\), angular velocity \(\omega\), and angular acceleration \(\alpha\) of the leg. 
+$PAR
+\(\theta\) = \{ ans_rule(30)\} $BR
+\(\omega\) = \{ ans_rule(30)\} $BR
+\(\alpha\) = \{ ans_rule(30)\} $BR
+$PAR
+B) Determine \(\theta\), \(\omega\), and \(\alpha\) of the leg at $t1 s and $t2 s after the rotational motion began.
+$PAR
+After $t1 second(s): $BR
+\(\theta\) = \{ ans_rule(10)\} 
+\(\omega\) = \{ ans_rule(10)\} 
+\(\alpha\) = \{ ans_rule(10)\} $PAR
+After $t2 second(s): $BR
+\(\theta\) = \{ ans_rule(10)\} 
+\(\omega\) = \{ ans_rule(10)\} 
+\(\alpha\) = \{ ans_rule(10)\} $BR
+END_TEXT
+
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS($T -> cmp(tolerance => .01)); # 1% tolerance
+ANS($O -> cmp(tolerance => .01)); # 1% tolerance
+ANS($A -> cmp(tolerance => .01)); # 1% tolerance
+
+ANS(($T->eval(t=>$t1)) -> cmp(tolerance => .01)); # 1% tolerance
+ANS(($O->eval(t=>$t1)) -> cmp(tolerance => .01)); # 1% tolerance
+ANS(($A->eval(t=>$t1)) -> cmp(tolerance => .01)); # 1% tolerance
+
+ANS(($T->eval(t=>$t2)) -> cmp(tolerance => .01)); # 1% tolerance
+ANS(($O->eval(t=>$t2)) -> cmp(tolerance => .01)); # 1% tolerance
+ANS(($A->eval(t=>$t2)) -> cmp(tolerance => .01)); # 1% tolerance
+# default tolerance is .01 or one percent.
+
+ENDDOCUMENT();        

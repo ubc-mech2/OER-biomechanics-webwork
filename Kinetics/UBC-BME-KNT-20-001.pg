@@ -1,0 +1,89 @@
+##DESCRIPTION
+##  BMEG 230 Tutorial 4 Q2
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection(' ')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$omega = 8;
+$alpha = 400;
+$mLL = 7;
+$I0 = 0.35;
+$d = 0.04;
+$d_cm = $d*100;
+$r = 0.22;
+$r_cm = $r*100;
+
+$I_COG = $I0 - ($mLL*($r**2));
+$Fx = $mLL*$alpha*$r;
+$Fq = ($I_COG*$alpha + ($Fx*$r))/$d;
+$Fy = $Fq - ($mLL*9.81) - ($mLL*($omega**2)*$r);
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+When kicking a ball, the angular acceleration of the kicking leg is at a maximum when the lower leg is vertical and at the instant the foot strikes the ball. Calculate the joint reaction forces at the knee and muscle force exerted by the quadriceps at the instant just before the ball is kicked.
+$PAR
+At this instant, the angular velocity (\(\omega\ = $omega rad/s\)) and the angular acceleration is (\(\alpha\ = $alpha rad/s\)). The weight of the lower leg (including the foot) is $mLL kg, and the mass moment of inertia about the centre of rotation of the knee is $I0 \(kg-m^2\). The distance from the patellar tendon to the center of rotation of the knee joint is $d_cm cm, and the distance from the COM of the lower leg to the centre of rotation of the knee is $r_cm cm. 
+$PAR
+Assume that during this kick, the knee centre is not moving or accelerating, the foot never touches the ground, and the quadriceps muscle only acts vertically. 
+$PAR
+$BBOLD IMAGE GOES HERE $EBOLD
+$PAR
+\(F_m\) = \{ans_rule(10)\} N $BR
+\(F_x\) = \{ans_rule(10)\} N $BR
+\(F_y\) = \{ans_rule(10)\} N $BR
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS(num_cmp($Fq));
+ANS(num_cmp($Fx));
+ANS(num_cmp($Fy));
+# relative tolerance --3.1412 is incorrect but 3.1413 is correct
+# default tolerance is .01 or one percent.
+
+
+ENDDOCUMENT();        

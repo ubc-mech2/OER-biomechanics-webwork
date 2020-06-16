@@ -1,0 +1,80 @@
+##DESCRIPTION
+##  BMEG230 Tutorial 4 Q3
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+$omega = 60;
+$mPole = 175;
+$roe = 2.25;
+$AG = 4;
+$AB = 0.5;
+
+$I_G = ($roe**2)*$mPole;
+$GB = $AG - $AB;
+$M = $I_G*$omega/$GB;
+$M_kN = $M/1000;
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+
+
+A car strikes the side of a light pole, which is designed to break away from its base with negligible resistance. From a video taken of the collision, it is obbserved that the pole was given an angular velocity of $omega rad/s when AC was vertical. The pole has a mass of $mPole kg, a centre of mass at G, and a radius of gyration about an axis perpendicular to the plane of the pole assembly and passing through G of \(k_G = $roe m\). Determine the horizontal impulse which the car exerts on the pole while AC is vertical.
+$PAR
+$BBOLD IMAGE HERE $EBOLD
+$PAR
+Impulse = \{ans_rule(10)\} kN
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS(num_cmp($M_kN));
+# relative tolerance --3.1412 is incorrect but 3.1413 is correct
+# default tolerance is .01 or one percent.
+
+
+ENDDOCUMENT();        

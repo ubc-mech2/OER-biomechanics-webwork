@@ -1,0 +1,90 @@
+##DESCRIPTION
+##  BMEG 230 Tutorial 5 Q1
+##ENDDESCRIPTION
+
+##KEYWORDS('')
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "answerHints.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$a = 3;
+$m = 60;
+$COM = 1.2;
+$I_a = 130;
+
+$Fy = $m*9.81;
+$Fx = $m*$a;
+$M = $Fx * $COM;
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Janet is inside a subway car that is initially at rest. When the train starts moving, it accelerates from the station at \($a m/s^2\), and Janet is standing in a perfectly upright and rigid posture. 
+$PAR
+$BBOLD image here $EBOLD
+$PAR
+What are the ankle moment and floor forces (in the x and y direction) that Janet must exert to maintain her posture, if her body mass is $m kg centered $COM m off the floor, and her moment of inertia about her ankles is $I_a \(kg \bullet  m^2\)? We can assume that the mass of the foot is negligible, and the foot doesn't rotate or accelerate in the y-direction.
+$PAR
+\{ knowlLink("Hint", 
+value=>'The initial velocity (both linear and angular) = 0.')
+\}
+$PAR
+\(F_x\) = \{ans_rule(10)\} N $BR
+\(F_y\) = \{ans_rule(10)\} N $BR
+\(M_{ankle}\) = \{ans_rule(10)\} Nm
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS(num_cmp($Fx));
+ANS(num_cmp($Fy));
+ANS(num_cmp($M));
+# relative tolerance --3.1412 is incorrect but 3.1413 is correct
+# default tolerance is .01 or one percent.
+
+
+ENDDOCUMENT();        
