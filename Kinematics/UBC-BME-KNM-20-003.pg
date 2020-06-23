@@ -45,8 +45,8 @@ $showPartialCorrectAnswers = 1;
 Context("Numeric");
 Context()->variables->add(t => 'Real');
 
-$theta0_deg = 75; 
-$theta0 = 75*pi/180;
+$theta0_deg = 42; 
+$theta0 = $theta0_deg*pi/180;
 $tao = 3.5;
 $phi = 2*pi/$tao;
 $T = Formula(" $theta0*sin($phi*t)");
@@ -65,7 +65,7 @@ Context()->texStrings;
 BEGIN_TEXT
 Consider an individual doing hip abduction motions, shown in the image below. In the frontal plane, point O is the axis of rotation of the hip joint, line OB and OC are the the positions of the leg when it is stretched out at the highest and lowest elevations, respectively, and are the limits for the leg's range of motion. Line OA represents the neutral position, where the angle between OA and OB is equal to the angle between OA and OC - this angle is \(\theta_0\ = $theta0_deg \circ\). 
 $PAR
-$BBOLD IMAGE GOES HERE $EBOLD
+\{ image( "UBC-BME-KNM-20-003.png", width=>250, height=>270) \}
 $PAR
 Assuming the individual's leg motion is symmetrical with respect to line and the period of angular motion is \(\tau = $tao s\):
 $PAR

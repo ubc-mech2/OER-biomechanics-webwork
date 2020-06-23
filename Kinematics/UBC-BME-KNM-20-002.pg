@@ -45,14 +45,10 @@ $showPartialCorrectAnswers = 1;
 Context("Numeric");
 Context()->variables->add(t => 'Real');
 
-#$r = random(0.1, 1.2, 0.1);
-#$c = random(0.11, 0.78, 0.01);
-#$v = random(1, 1.5, 0.01);
-#$t = random(2, 6, 1);
-$r = 0.8;
-$multi = 0.45;
-$t = 3;
-$exp = 4/3;
+$r = random(0.1, 1.2, 0.1);
+$multi = random(0.11, 0.78, 0.01);
+$exp = random(1.1, 1.5, 0.01);
+$t = random(2, 6, 1);
 $S = Formula("$multi t^($exp)");
 
 
@@ -70,22 +66,25 @@ $a = sqrt(($a_t_time)**2 + ($a_n)**2);
 #
 Context()->texStrings;
 BEGIN_TEXT
-Consider an object undergoing a rotational motion in the xy-plane about a fixed axis perpendicular to the plane of motion. Let O be a point in the x-y plane along the axis of rotation, and P is a fixed point on the object. Due to the rotation of the object, point P will move in a circular path with radius r = \($r\) m. The relative position of point P along its circular path is given as a function of time \($S\).
+Following a circular path with a radius \(r\), a point P undergoes 2-dimensional rotational motion about an axis perpendicular to the page (indicated by point O). Point P's relative position is assigned as a function of time: \(S=$S\). 
 $PAR
-$BBOLD image goes here $EBOLD
+\{ image( "UBC-BME-KNM-20-002.png", width=>200, height=>210 ) \}
+
 $PAR
-Determine the magnitude of the linear velocity (v) of point P along its path.
+$PAR
+If \(r = $r\) m: $PAR
+1. Determine the magnitude of the linear velocity \(v\) of point P along its path.
 $PAR
 \(v\) = \{ ans_rule(10)\} \(m/s\)
 
 $PAR
-Determine the tangential (a_t), normal (a_n), and net acceleration $t s after the motion began. 
+2. Determine the tangential (\(a_t\)), normal (\(a_n\)), and net acceleration (\(a_{net}\)), $t s after the motion began. 
 $PAR
 \(a_t\) = \{ ans_rule(10)\} \(m/s^2\)
 $PAR
 \(a_n\) = \{ ans_rule(10)\} \(m/s^2\)
 $PAR
-\(Net\ Acceleration\) = \{ ans_rule(10)\} \(m/s^2\)
+\(a_{net}\) = \{ ans_rule(10)\} \(m/s^2\)
 $PAR
 END_TEXT
 

@@ -65,7 +65,8 @@ At this instant, the angular velocity (\(\omega\ = $omega rad/s\)) and the angul
 $PAR
 Assume that during this kick, the knee centre is not moving or accelerating, the foot never touches the ground, and the quadriceps muscle only acts vertically. 
 $PAR
-$BBOLD IMAGE GOES HERE $EBOLD
+\{ image( "UBC-BME-KNT-20-001.png", width=>160, height=>210 ) \}
+
 $PAR
 \(F_m\) = \{ans_rule(10)\} N $BR
 \(F_x\) = \{ans_rule(10)\} N $BR

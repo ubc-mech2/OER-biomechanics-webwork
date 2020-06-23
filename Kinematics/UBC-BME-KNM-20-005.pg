@@ -46,9 +46,9 @@ Context("Numeric");
 Context()->variables->add(t => 'Real');
 
 
-$r = 0.5;
-$omega = 6;
-$alpha = 4;
+$r = random(0.2, 1, 0.1);
+$omega = random(5, 9, 1);
+$alpha = random(2, 6, 1);
 
 $a_i = - ($alpha * $r);
 $a_j = - ($omega**2 * $r);

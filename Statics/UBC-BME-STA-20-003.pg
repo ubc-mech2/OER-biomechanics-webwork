@@ -7,7 +7,7 @@
 ## DBsubject('')
 ## DBchapter('')
 ## DBsection(' ')
-## Date('6/3/2002')
+## Date('')
 ## Author('')
 ## Institution('')
 ## TitleText1('')
@@ -40,8 +40,8 @@ $showPartialCorrectAnswers = 1;
 #  Setup
 #
 #
-$mHelmet = 1.5;
-$mNVG = 1;
+$mHelmet = random(1, 3, 0.1);
+$mNVG = random(0.8, 2, 0.1);
 $d_cm = 20;
 $d = $d_cm/100;
 $theta_deg = 80;

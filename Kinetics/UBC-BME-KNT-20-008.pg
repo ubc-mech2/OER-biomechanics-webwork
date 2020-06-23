@@ -1,0 +1,220 @@
+##DESCRIPTION
+## BMEG 330 Assignment 5
+##ENDDESCRIPTION
+
+##KEYWORDS('')
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('3')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "answerHints.pl",
+   "parserVectorUtils.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+$m = 1.12;
+$Ix = 0.01;
+$Iy = 0.001;
+$Iz = 0.01;
+$ax = 3.25;
+$ay = 1.78;
+$alpha = -45.35;
+
+$COPx = 1.032;
+$COPy = 0;
+$COMx = 0.953;
+$COMy = 0.084;
+$MTx = 1.009;
+$MTy = 0.009;
+$Ax = 0.897;
+$Ay = 0.16;
+
+$GRFx = 160.25;
+$GRFy = 765.96;
+
+##############################################################
+#
+#  Text
+#
+Scaffold::Begin();
+BEGIN_TEXT
+Consider someone in the late stance phase of walking, with the mass of the foot being $m kg.  
+$PAR During the push-off, the following foot accelerations were recorded in the $BBOLD global coordinate sytem $EBOLD: $PAR
+\(a_x\) = $ax \(m/s^2\),    
+\(a_y\) = $ay \(m/s^2\),    $PAR
+At the same time, the angular acceleration and mass moment of inertia was collected in the $BBOLD foot coordinate sytem $EBOLD: $PAR
+\(\alpha\) = $alpha \(rad/s^2\) , $BR
+\(I_z\) = $Iz \(kg-m^2\) about the flexion/extension axis
+
+$PAR
+In the image below, the coordinates of the foot are in centimetres in the force plate coordinate system (i.e. the X and Y directions indicated on the diagram). $PAR
+$BBOLD image here $EBOLD
+
+END_TEXT
+Section::Begin(); 
+#### setup #####
+$Fx1 = -$GRFx;
+$Fy1 = ($m*9.81) - $GRFy;
+$M1 = -($GRFx*abs($COMy-$COPy)) - ($GRFy*abs($COMx-$COPx)) + ($Fx1*abs($COMy - $Ay)) + ($Fy1*abs($COMx - $Ax));
+
+## text ###
+BEGIN_TEXT
+Find the static reaction forces and moment at the ankle joint. This means ignore the effects of inertia. You should treat this like a 3D analysis in your code, but input the 2D values given. For example, the ground reaction forces can be represented with the column vector: \[F = [$GRFx, $GRFy, 0]'\] 
+$PAR
+
+\(F_x\) = \{ans_rule(10)\} N $BR
+\(F_y\) = \{ans_rule(10)\} N $BR
+\(M_A\) = \{ans_rule(10)\} Nm $BR
+END_TEXT
+ANS(num_cmp($Fx1));
+ANS(num_cmp($Fy1));
+ANS(num_cmp($M1));
+Section::End(); 
+
+Section::Begin();
+## setup ##
+Context('Matrix');
+$R2 = Matrix([[1,0,0],[0,1,0], [0,0,1]]);
+$Fx2 = $m*$ax - $GRFx;
+$Fy2 = $m*$ay - $GRFy + ($m*9.81);
+$M2 = $Iz*$alpha -($GRFx*abs($COMy-$COPy)) - ($GRFy*abs($COMx-$COPx)) + ($Fx2*abs($COMy - $Ay)) + ($Fy2*abs($COMx - $Ax));
+## text ##
+Context()->texStrings;
+BEGIN_TEXT
+Now, try coding your MATLAB for the 2D $BBOLD dynamic $EBOLD case using the values from Part 1. This should be a similar procedure to Part 1; however, this time you need to account for the inertial effects of the foot. 
+$PAR
+You can assume the anatomical foot coordinate system is perfectly aligned with the force plate coordinate system. For instance, the local x-axis of the foot is the same direction as the force plate x-axis. This means you can use the following rotation matrix: $PAR
+\(R =\)  \( $R2 \) $PAR
+Tips: $BR
+- You can assume the angular velocity is zero $BR
+- Try following steps and equations described in Winter text (p189-191) $BR
+- Remember that the mass moment of inertia is described about an antomical axis and describes the inertia of the foot at centre of mass. This is why the R matrix is important.
+$PAR
+\(F_x\) = \{ans_rule(10)\} N $BR
+\(F_y\) = \{ans_rule(10)\} N $BR
+\(M_A\) = \{ans_rule(10)\} Nm $BR
+
+END_TEXT
+ANS(num_cmp($Fx2));
+ANS(num_cmp($Fy2));
+ANS(num_cmp($M2));
+
+Section::End();
+
+Section::Begin();
+## setup ##
+Context('Matrix');
+$R3 = Matrix([[0.9565,-0.1256,0.2632],[0.1344,0.9908,-0.0159], [-0.2588,0.0506,0.9646]]);
+
+Context('Vector');
+$COP = ColumnVector($COPx, $COPy, 0);
+$COM = ColumnVector($COMx, $COMy, 0);
+$ankle = ColumnVector($Ax, $Ay, 0);
+$delta_COP_COM = $COP-$COM;
+$delta_ankle_COM = $ankle - $COM; 
+$GRM = ColumnVector(0, 0, 0);
+$Fgrf = ColumnVector($GRFx,$GRFy,0);
+$Fmg = ColumnVector(0,-9.81*$m,0);
+$a = ColumnVector($ax, $ay, 0);
+$Inertia = $m*$a;
+$FankleG = $Inertia - $Fgrf - $Fmg;
+$FankleF1 = ($R3->inverse)*$FankleG;
+#$Fx3 = $FankleF1->extract(1);
+#$Fy3 = Real($FankleF1->extract(2));
+#$Fz3 = Real($FankleF1->extract(3));
+
+
+$dynamicSumMoments = ($delta_COP_COM x $Fgrf) + ($delta_ankle_COM x $FankleG) + $GRM;
+$dynamicSumMomentsR = Vector(($R3->inverse)*$dynamicSumMoments);
+$inertialCont = ColumnVector(0, 0, $Iz*$alpha);
+$M3 = $inertialCont - $dynamicSumMomentsR;
+#$Mx3 = $M3->extract(1);
+#$My3 = $M3->extract(2);
+#$Mz3 = $M3->extract(3);
+
+## text ##
+Context()->texStrings;
+BEGIN_TEXT
+Now, try to solve the problem in a different foot coordinate system. The following rotation matrix describes the transformation between the force plate coordinate system and the local foot anatomical coordinate system: 
+$PAR
+\(R =\)  \( $R3 \) $PAR
+Tips: $BR
+- Remember that inertial terms are described for the $BBOLD anatomical coordinate system. $EBOLD A mass moment of inertia value is typically relative to an anatomical coordinate axis. Since the foot may be positioned randomly, it is not useful to describe the mass moment of inertia about a global axis. it is more useful to describe about, for instance, the foot flexion/extension axis. So, the R matrix here is important. $BR
+- Note that the anatomical axis is still mostly aligned with the force plate coordinate system. So, your answers shouldn't be too far off from your Part II answers. 
+$PAR
+Please enter your values as a vector in the form: \(<x, y, z>\). $PAR
+\(F_{ankle}\) = \{ans_rule(30)\} N $BR
+\(M_{ankle}\) = \{ans_rule(30)\} Nm
+END_TEXT
+
+$showHint = 1;
+BEGIN_HINT
+Remember that \(a_x\) and \(a_y\) are in the global C.S. and \(\alpha\) is in the foot C.S.! You may have missed a step here. 
+END_HINT
+
+ANS(Vector($FankleF1)->cmp);
+ANS(Vector($M3)->cmp);
+Section::End();
+
+Section::Begin();
+## setup ##
+
+## text ##
+Context()->texStrings;
+BEGIN_TEXT
+Now, solve the problem given that \(I_x\) and \(I_y\) are no longer zero. The mass moment of inertia was collected in the foot coordinate system: $BR
+\(I_x\) = $Ix \(kg-m^2\) about the internal/exteral rotation axis $BR
+\(I_y\) = $Iy \(kg-m^2\) about the abduction/adduction axis $BR
+\(I_z\) = $Iz \(kg-m^2\) about the flexion/extension axis
+$PAR
+Please enter your values as a vector in the form: \(<x, y, z>\). $PAR
+\(F_{ankle}\) = \{ans_rule(30)\} N $BR
+\(M_{ankle}\) = \{ans_rule(30)\} Nm
+END_TEXT
+
+ANS(Vector($FankleF1)->cmp);
+ANS(Vector($M3)->cmp);
+
+Section::End();
+Scaffold::End();
+##############################################################
+#
+#  Answers
+#
+#
+
+# relative tolerance --3.1412 is incorrect but 3.1413 is correct
+# default tolerance is .01 or one percent.
+
+
+ENDDOCUMENT();        

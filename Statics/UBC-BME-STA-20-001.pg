@@ -39,10 +39,10 @@ $showPartialCorrectAnswers = 1;
 #
 Context("Numeric");
 
-$m = 65;
-$l_w = 0.14;
-$l_m = 0.081;
-$l_b = 0.024;
+$m = random(60, 70, 1);
+$l_w = random(0.12, 0.16, 0.01);
+$l_m = random(0.078, 0.085, 0.001);
+$l_b = random(0.020, 0.027, 0.001);
 $l_b_cm = $l_b * 100;
 $l_w_cm = $l_w * 100;
 $l_m_cm = $l_m * 100;
@@ -64,7 +64,7 @@ BEGIN_TEXT
 
 The femorotibial joint is a synovial hinge joint between the distal femur and  proximal tibia.
 $PAR
-For a $m \(kg\) person standing on one foot, determine the tension in the gluteus maximus \(F_M\) and bone force \(F_R\) in this position. \(F_R\) acts $l_b_cm \(cm\) medially from the centre of rotation, which is circled in red below. The weight force lever arm is  $l_w_cm \(cm\) and gluteus maximus lever arm is $l_m_cm \(cm\) from the joint center of rotation. 
+For a $m \(kg\) person standing on one foot, determine the tension in the gluteus maximus \(F_M\) and bone force \(F_R\) in this position if \(F_R\) acts $l_b_cm \(cm\) medially from the centre of rotation, which is circled in red below. The lever arm for weight and muscle forces are $l_w_cm \(cm\) and $l_m_cm \(cm\) from the femorotibial joint's center of rotation, respectively. 
 $PAR
 \{ image( "UBC-BME-STA-20-001.png", width=>150, height=>230) \}
 $PAR

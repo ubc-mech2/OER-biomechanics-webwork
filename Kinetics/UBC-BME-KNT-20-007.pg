@@ -1,0 +1,133 @@
+##DESCRIPTION
+## BMEG 230 Tutorial 5 Q3
+##ENDDESCRIPTION
+
+##KEYWORDS('')
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('3')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "niceTables.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$mF = 1.2;
+$mL = 2.4;
+$mT = 6.0;
+$IF = 0.011;
+$IL = 0.064; 
+$IT = 0.130;
+
+$axF = -3.06;
+$ayF = 5.12;
+$alphaF = 68.18; 
+$COMxF = 1.345;
+$COMyF = 0.066;
+
+$axL = -6.23;
+$ayL = -0.67;
+$alphaL = 10; 
+$COMxL = 1.269;
+$COMyL = 0.332;
+
+$axT = -5.49;
+$ayT = -1.26;
+$alphaT = -13.38; 
+$COMxT = 1.196;
+$COMyT = 0.682;
+
+$GRFx = -110.5;
+$GRFy = 552.9;
+
+$anklex = 1.2931;
+$ankley = 0.094;
+$kneex = 1.25; 
+$kneey = 0.5138;
+$hipx = 1.154;
+$hipy = 0.81;
+
+$COPx = 1.304;
+$COPy = 0;
+
+$FxA = $mF*$axF-$GRFx;
+$FyA = $GRFy - $mF*9.81 - ($mF*$ayF);
+$MA = $FyA*abs($COMxF-$anklex) + $FxA*abs($COMyF-$ankley) + ($GRFx*($COMyF-$COPy)) - ($GRFy*abs($COMxF-$COPx)) - ($IF*$alphaF);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+$d1 $d2 You are in a gait lab, studying the various forces and moments involved in walking. From a patient trial, you gather kinematic and kinetic data, and decide to analyze a specific point in time: 0.5s into the walk. 
+$PAR
+From the force plate, you gather  at this instant, the horizontal ground reaction force is $GRFx N, the vertical ground reaction force is $GRFy N, and the COP is ($COPx, 0) m. From marker data, you find that the coordinates of ankle, knee, and hip at this time point are ($anklex, $ankley) m, ($kneex, $kneey) m, and ($hipx, $hipy) m, respectively. $PAR
+You also collect the following data: $BR
+\{
+DataTable(
+  [
+    [[' ', headerrow => 1],'\(a_x (m/{s^2)}\)', '\(a_x (m/{s^2})\)', '\(\alpha (rad/{s^2})\)', '\(COM (m)\)'],
+    [['Thigh', m=>1],'$axT', '$ayT', '$alphaT', '($COMxT, $COMyT)'],
+    [['Leg', m=>1],'$axL', '$ayL', '$alphaL', '($COMxL, $COMyL)'],
+    [['Foot', m=>1],'$axF', '$ayF', '$alphaF', '($COMxF, $COMyF)'],
+  ], 
+  caption => 'Kinematic Data at 0.5s',
+  midrules => 1,
+  align => 'p{1in} X',
+);
+\}
+$PAR
+Calculate the reaction forces and moments at the subject's $BBOLD ankle $EBOLD at this point in time. $PAR 
+\(F_x\) = \{ans_rule(10)\} $BR
+\(F_y\) = \{ans_rule(10)\}$BR
+\(M_A\) = \{ans_rule(10)\}
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS(num_cmp($FxA));
+ANS(num_cmp($FyA));
+ANS(num_cmp($MA));
+# relative tolerance --3.1412 is incorrect but 3.1413 is correct
+# default tolerance is .01 or one percent.
+
+
+ENDDOCUMENT();        
+      
