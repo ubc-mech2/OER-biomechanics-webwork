@@ -45,7 +45,7 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-Context()->strings->add(regulatory=>{}, research =>{}, consumer=>{}, information =>{}, dog=>{});
+Context()->strings->add(regulatory=>{}, research =>{}, consumer=>{}, information =>{}, test=>{});
 
 $r1 = Compute("regulatory");
 $r2 = Compute("research");
