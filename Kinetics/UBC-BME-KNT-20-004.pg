@@ -60,7 +60,7 @@ BEGIN_TEXT
 
 Janet is inside a subway car that is initially at rest. When the train starts moving, it accelerates from the station at \($a m/s^2\), and Janet is standing in a perfectly upright and rigid posture. 
 $PAR
-$BBOLD image here $EBOLD
+\{ image( "UBC-BME-KNT-20-004.png", width=>250, height=>250)\}
 $PAR
 What are the ankle moment and floor forces (in the x and y direction) that Janet must exert to maintain her posture, if her body mass is $m kg centered $COM m off the floor, and her moment of inertia about her ankles is $I_a \(kg \bullet  m^2\)? We can assume that the mass of the foot is negligible, and the foot doesn't rotate or accelerate in the y-direction.
 $PAR

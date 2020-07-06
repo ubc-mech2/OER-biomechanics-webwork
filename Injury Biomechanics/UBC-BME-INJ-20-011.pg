@@ -1,6 +1,8 @@
 ##DESCRIPTION
-##  BMEG230 Tutorial 4 Q3
+##  
 ##ENDDESCRIPTION
+
+##KEYWORDS('')
 
 ## DBsubject('')
 ## DBchapter('')
@@ -21,6 +23,11 @@ DOCUMENT();
 loadMacros(
    "PGstandard.pl",     # Standard macros for PG language
    "MathObjects.pl",
+   "PG.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "unionTables.pl",
    #"source.pl",        # allows code to be displayed on certain sites.
    #"PGcourse.pl",      # Customization file for the course
 );
@@ -37,16 +44,13 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-$omega = 60;
-$mPole = 175;
-$roe = 2.25;
-$AG = 4;
-$AB = 0.5;
 
-$I_G = ($roe**2)*$mPole;
-$GB = $AG - $AB;
-$M = $I_G*$omega/$GB;
-$M_kN = $M/1000;
+$AIS_head = 4;
+$AIS_face = 1;
+$AIS_chest = 5;
+
+$ISS = $AIS_head**2 + $AIS_face**2 + $AIS_chest**2;
+$MAIS = $AIS_chest; 
 
 ##############################################################
 #
@@ -56,12 +60,12 @@ $M_kN = $M/1000;
 
 Context()->texStrings;
 BEGIN_TEXT
-
-In a video taken of a van hitting a streetlight, it is found that the post, starting in a vertical position, tips with an angular velocity of $omega rad/s. If the streetlight's centre of mass is at point C, has a mass of $mPole kg, and a radius of gyration \(\rho = $roe m\) about an axis perpendicular to the length of the pole, what is the horizontal impulse of the van on the streetlight during the collision (while the post is still vertical)? 
+Calculate an ISS and MAIS for this set of injuries: $PAR
+\{ image( "UBC-BME-INJ-20-011.png", width=>700, height=>320 ) \}
 $PAR
-\{image( "UBC-BME-KNT-20-003.png", width=>240, height=>300)\}
+ISS = \{ans_rule(10)\}
 $PAR
-Impulse = \{ans_rule(10)\} kN
+MAIS = \{ans_rule(10)\} 
 END_TEXT
 Context()->normalStrings;
 
@@ -70,10 +74,9 @@ Context()->normalStrings;
 #  Answers
 #
 #
-
-ANS(num_cmp($M_kN));
-# relative tolerance --3.1412 is incorrect but 3.1413 is correct
-# default tolerance is .01 or one percent.
+$showPartialCorrectAnswers = 1;
+ANS( num_cmp( $ISS ));
+ANS( num_cmp( $MAIS ));
 
 
 ENDDOCUMENT();        

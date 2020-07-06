@@ -1,6 +1,8 @@
 ##DESCRIPTION
-##  BMEG230 Tutorial 4 Q3
+##  
 ##ENDDESCRIPTION
+
+##KEYWORDS('')
 
 ## DBsubject('')
 ## DBchapter('')
@@ -37,16 +39,9 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-$omega = 60;
-$mPole = 175;
-$roe = 2.25;
-$AG = 4;
-$AB = 0.5;
 
-$I_G = ($roe**2)*$mPole;
-$GB = $AG - $AB;
-$M = $I_G*$omega/$GB;
-$M_kN = $M/1000;
+$max = 400;
+$min = 350;
 
 ##############################################################
 #
@@ -57,11 +52,11 @@ $M_kN = $M/1000;
 Context()->texStrings;
 BEGIN_TEXT
 
-In a video taken of a van hitting a streetlight, it is found that the post, starting in a vertical position, tips with an angular velocity of $omega rad/s. If the streetlight's centre of mass is at point C, has a mass of $mPole kg, and a radius of gyration \(\rho = $roe m\) about an axis perpendicular to the length of the pole, what is the horizontal impulse of the van on the streetlight during the collision (while the post is still vertical)? 
+Estimate the impact duration \(\Delta t\) for the following crash test resultant linear acceleration data:
 $PAR
-\{image( "UBC-BME-KNT-20-003.png", width=>240, height=>300)\}
+$BBOLD image here $EBOLD
 $PAR
-Impulse = \{ans_rule(10)\} kN
+\(\Delta t\) = \{ans_rule(10)\} ms
 END_TEXT
 Context()->normalStrings;
 
@@ -70,10 +65,14 @@ Context()->normalStrings;
 #  Answers
 #
 #
-
-ANS(num_cmp($M_kN));
-# relative tolerance --3.1412 is incorrect but 3.1413 is correct
-# default tolerance is .01 or one percent.
-
+ANS(Real($min)->cmp(
+   checker => sub{
+   my ($correct, $student, $ansHash) = @_;
+   my ($sx) = $student->value;
+   if (($sx <= $max) && ($sx >= $min)){
+   return 1;
+   }
+   else {return 0;}
+ }));
 
 ENDDOCUMENT();        

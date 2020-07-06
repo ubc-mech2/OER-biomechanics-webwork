@@ -72,7 +72,8 @@ A bowling ball with radius \($r\ ft\) is thrown down the bowling alley as depict
 $PAR
 Determine the accelerations of point B and point A at the instant seen below. 
 $BR
-\{ image( "UBC-BME-KNM-20-005.png", width=>550, height=>160 ) \}
+\{ image( "UBC-BME-KNM-20-005-1.png", width=>200, height=>370 ) \}
+\{ image( "UBC-BME-KNM-20-005-2.png", width=>260, height=>160 ) \}
 $PAR
 \(a_B\) = \{ ans_rule(10)\} \(m/s^2\) $BR
 \(a_A\) = \{ ans_rule(10)\} \(m/s^2\) $BR

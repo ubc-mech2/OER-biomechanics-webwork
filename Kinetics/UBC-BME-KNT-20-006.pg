@@ -91,8 +91,11 @@ $dE = $Etot2 - $Etot1;
 
 Context()->texStrings;
 BEGIN_TEXT
-In a gait lab, the walk of a subject is analyzed between the stages of toe-off and heel-strike (as seen in the figures below). The relevant heights and linear and angular velocities just after toe-off occurs until just before heel-strike for each component are stated below: $BR
-\{ image( "UBC-BME-KNT-20-006-1.png", width =>430, height=>120 ) \}
+In a gait lab, the walk of a subject is analyzed between the stages of toe-off and heel-strike (as shown in the figures below). $PAR
+\{ image( "UBC-BME-KNT-20-006-2.png", width =>300, height=>120 ) \}
+
+$PAR The relevant heights and linear and angular velocities just after toe-off occurs until just before heel-strike for each component are stated below: $BR
+\{ image( "UBC-BME-KNT-20-006-1.png", width =>460, height=>150 ) \}
 
 $PAR
 The subject's thigh, shank and foot have a mass of $mT, $mS, and $mF \(kg\), respectively, and an mass moment of inertia about the centre of gravity (\(I_G\)) of $IT, $IS, and $IF \(kg-m^2\), respectively. 

@@ -62,7 +62,7 @@ Scaffold::Begin();
 BEGIN_TEXT
 While lifting a $mW kg weight, an individual rotates her shoulder while keeping her elbow and wrist rigid (see image). Starting at rest, with the upper arm vertical and lower arm and hand horizontal, the arm moves and the weight is lifted. The shoulder acts a fixed hinge, and the initial angular acceleration of the arm and hand is \(\alpha = 4 rad/s^2\) counter-clockwise. 
 $PAR
-$BBOLD image $EBOLD
+ \{ image( "UBC-BME-KNT-20-005.png", width=>350, height=>290 ) \} 
 $PAR
 The masses of her upper arm, lower arm, and hand are $mU, $mL, and $mH kg, respectively. The mass centre moments of inertia of her upper arm and lower arm are $IU and $IL \(kg \bullet m^2\), respectively. Assume the mass centre moment of inertia for her hand carrying the weight is negligible. Information on arm dimensions can be found in the table below: 
 $BR \{ image( "UBC-BME-KNT-20-005-2.png", width=>350, height=>60 ) \}

@@ -1,6 +1,8 @@
 ##DESCRIPTION
-##  BMEG230 Tutorial 4 Q3
+##  
 ##ENDDESCRIPTION
+
+##KEYWORDS('')
 
 ## DBsubject('')
 ## DBchapter('')
@@ -21,6 +23,11 @@ DOCUMENT();
 loadMacros(
    "PGstandard.pl",     # Standard macros for PG language
    "MathObjects.pl",
+   "PG.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "unionTables.pl",
    #"source.pl",        # allows code to be displayed on certain sites.
    #"PGcourse.pl",      # Customization file for the course
 );
@@ -37,16 +44,18 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-$omega = 60;
-$mPole = 175;
-$roe = 2.25;
-$AG = 4;
-$AB = 0.5;
 
-$I_G = ($roe**2)*$mPole;
-$GB = $AG - $AB;
-$M = $I_G*$omega/$GB;
-$M_kN = $M/1000;
+$t = 0.015;
+$sum = 395;
+$HIC = $t*(($sum*0.003)/$t)**2.5;
+$t1 = 21;
+$t2 = 36;
+$mc = new_multiple_choice();
+$mc->qa(
+"Does this motion have greater than a 5% chance of causing head injury?", 
+"Yes"
+);
+$mc->makeLast("No");
 
 ##############################################################
 #
@@ -56,12 +65,18 @@ $M_kN = $M/1000;
 
 Context()->texStrings;
 BEGIN_TEXT
-
-In a video taken of a van hitting a streetlight, it is found that the post, starting in a vertical position, tips with an angular velocity of $omega rad/s. If the streetlight's centre of mass is at point C, has a mass of $mPole kg, and a radius of gyration \(\rho = $roe m\) about an axis perpendicular to the length of the pole, what is the horizontal impulse of the van on the streetlight during the collision (while the post is still vertical)? 
+Calculate a HIC15 for the resultant rider head acceleration (shown below) during a bucking motion. Is this likely to cause head injury, based on the HIC15 limit?
 $PAR
-\{image( "UBC-BME-KNT-20-003.png", width=>240, height=>300)\}
+\{ image( "UBC-BME-INJ-20-010.png", width=>764, height=>534 ) \}
 $PAR
-Impulse = \{ans_rule(10)\} kN
+Time window for maximum HIC: \(t =\) \{ans_rule(10)\} \(ms\) to \(t =\) \{ans_rule(10)\} \(ms\).
+$PAR
+What is the HIC value for this time window? $BR
+HIC = \{ans_rule(10)\} 
+$PAR
+\{ $mc->print_q() \}
+$BR
+\{ $mc->print_a() \}
 END_TEXT
 Context()->normalStrings;
 
@@ -70,10 +85,10 @@ Context()->normalStrings;
 #  Answers
 #
 #
-
-ANS(num_cmp($M_kN));
-# relative tolerance --3.1412 is incorrect but 3.1413 is correct
-# default tolerance is .01 or one percent.
-
+$showPartialCorrectAnswers = 0;
+ANS( num_cmp( $t1 ));
+ANS( num_cmp( $t2 ));
+ANS( num_cmp( $HIC ));
+ANS( radio_cmp( $mc->correct_ans() ) );
 
 ENDDOCUMENT();        

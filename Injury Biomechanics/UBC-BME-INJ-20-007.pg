@@ -1,6 +1,8 @@
 ##DESCRIPTION
-##  BMEG230 Tutorial 4 Q3
+##  
 ##ENDDESCRIPTION
+
+##KEYWORDS('')
 
 ## DBsubject('')
 ## DBchapter('')
@@ -21,6 +23,12 @@ DOCUMENT();
 loadMacros(
    "PGstandard.pl",     # Standard macros for PG language
    "MathObjects.pl",
+   "PG.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "unionTables.pl",
+   "parserPopUp.pl",
    #"source.pl",        # allows code to be displayed on certain sites.
    #"PGcourse.pl",      # Customization file for the course
 );
@@ -37,17 +45,15 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-$omega = 60;
-$mPole = 175;
-$roe = 2.25;
-$AG = 4;
-$AB = 0.5;
+$m = 5;
+$a = 10;
+$Fp = 750;
+$aI = 20;
 
-$I_G = ($roe**2)*$mPole;
-$GB = $AG - $AB;
-$M = $I_G*$omega/$GB;
-$M_kN = $M/1000;
+$F = $m*$a;
+$Fpmhs = $Fp - ($m*-$aI);
 
+$popup = PopUp(["?", "positive", "negative"], "negative");
 ##############################################################
 #
 #  Text
@@ -56,12 +62,20 @@ $M_kN = $M/1000;
 
 Context()->texStrings;
 BEGIN_TEXT
-
-In a video taken of a van hitting a streetlight, it is found that the post, starting in a vertical position, tips with an angular velocity of $omega rad/s. If the streetlight's centre of mass is at point C, has a mass of $mPole kg, and a radius of gyration \(\rho = $roe m\) about an axis perpendicular to the length of the pole, what is the horizontal impulse of the van on the streetlight during the collision (while the post is still vertical)? 
+A $m kg plate fitted with a load cell (negligible mass) is accelerated into the thorax of a cadaveric specimen via pneumatic piston as part of an experiment:
 $PAR
-\{image( "UBC-BME-KNT-20-003.png", width=>240, height=>300)\}
+\{ image( "UBC-BME-INJ-20-007.png", width=>300, height=>200) \}
 $PAR
-Impulse = \{ans_rule(10)\} kN
+If the impactor is accelerated at $a \(m/s^2\), what force does the load cell read prior to impact?
+$PAR \(F_{cell}\) = \{ans_rule(10)\} N
+$PAR
+The peak force during impact is found to be $Fp N (impactor acceleration = $aI \(m/s^2\)). 
+$PAR
+In what direction is the impactor accelerated during impact?
+\{ $popup->menu() \}
+$PAR 
+What is the actual peak force on the thorax of the cadaveric specimen? 
+$PAR \(F_{PMHS}\) = \{ans_rule(10)\} N
 END_TEXT
 Context()->normalStrings;
 
@@ -70,10 +84,8 @@ Context()->normalStrings;
 #  Answers
 #
 #
-
-ANS(num_cmp($M_kN));
-# relative tolerance --3.1412 is incorrect but 3.1413 is correct
-# default tolerance is .01 or one percent.
-
+ANS(num_cmp($F));
+ANS( $popup->cmp() );
+ANS(num_cmp($Fpmhs));
 
 ENDDOCUMENT();        

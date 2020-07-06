@@ -1,6 +1,8 @@
 ##DESCRIPTION
-##  BMEG230 Tutorial 4 Q3
+##  
 ##ENDDESCRIPTION
+
+##KEYWORDS('')
 
 ## DBsubject('')
 ## DBchapter('')
@@ -21,6 +23,11 @@ DOCUMENT();
 loadMacros(
    "PGstandard.pl",     # Standard macros for PG language
    "MathObjects.pl",
+   "PG.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "unionTables.pl",
    #"source.pl",        # allows code to be displayed on certain sites.
    #"PGcourse.pl",      # Customization file for the course
 );
@@ -37,17 +44,23 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-$omega = 60;
-$mPole = 175;
-$roe = 2.25;
-$AG = 4;
-$AB = 0.5;
 
-$I_G = ($roe**2)*$mPole;
-$GB = $AG - $AB;
-$M = $I_G*$omega/$GB;
-$M_kN = $M/1000;
+$ml = new_match_list();
+$ml->qa(
+"Starts from stationary", "Acceleration Sleds",
+"Crash pulse from pneumatic actuator with metering pin", "Acceleration Sleds",
+"Needs less room", "Acceleration Sleds",
+"Starts from set velocity", "Deceleration Sleds",
+"Needs more room", "Deceleration Sleds",
+"Requires braking ram", "Deceleration Sleds"
+);
 
+# use pop-up-lists
+$ml->rf_print_q(~~&pop_up_list_print_q);
+# you may need to add more letters D=>"D", etc. 
+$ml->ra_pop_up_list([No_answer=>"?",A=>"A",B=>"B"]);
+
+$ml->choose(6);
 ##############################################################
 #
 #  Text
@@ -56,12 +69,12 @@ $M_kN = $M/1000;
 
 Context()->texStrings;
 BEGIN_TEXT
-
-In a video taken of a van hitting a streetlight, it is found that the post, starting in a vertical position, tips with an angular velocity of $omega rad/s. If the streetlight's centre of mass is at point C, has a mass of $mPole kg, and a radius of gyration \(\rho = $roe m\) about an axis perpendicular to the length of the pole, what is the horizontal impulse of the van on the streetlight during the collision (while the post is still vertical)? 
+Match the following features to the relevant sled testing method:
 $PAR
-\{image( "UBC-BME-KNT-20-003.png", width=>240, height=>300)\}
+\{ $ml->print_q() \}
+$BR
+\{ $ml->print_a() \}
 $PAR
-Impulse = \{ans_rule(10)\} kN
 END_TEXT
 Context()->normalStrings;
 
@@ -70,10 +83,8 @@ Context()->normalStrings;
 #  Answers
 #
 #
-
-ANS(num_cmp($M_kN));
-# relative tolerance --3.1412 is incorrect but 3.1413 is correct
-# default tolerance is .01 or one percent.
-
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( str_cmp( $ml->ra_correct_ans ) );
 
 ENDDOCUMENT();        
