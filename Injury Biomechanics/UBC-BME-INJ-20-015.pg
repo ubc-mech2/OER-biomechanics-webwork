@@ -1,0 +1,107 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+##KEYWORDS('')
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "PG.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "unionTables.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Context()->strings->add(A =>{}, B =>{}, C=>{}, D =>{}, E =>{}, F =>{}, G =>{}, H =>{}, I =>{}, J =>{});
+
+$ans1 = Compute("A, B");
+$ans2 = Compute("B, J");
+
+$MAIS = 4;
+$ISS = 4**2 + 3**2;
+
+$mc = new_checkbox_multiple_choice();
+$mc -> qa (
+"b) What is a possible set of injuries to be included in the ISS calculation? Choose all that apply.",
+"AIS codes: 1406324, 4422023",                
+"AIS codes: 4422023, 1212024",
+);
+$mc -> extra(
+"AIS codes: 1406324, 4422023, 3904021 $BR",
+"AIS codes: 3904021, 1212024 $BR",
+"AIS codes: 4422023, 1406623, 1212024 $BR",
+"AIS codes: 4422023, 1406843 $BR",
+);
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+You are exploring the injuries associated with improvised explosive device (IED) explosions under light armoured vehicles. The underbody armour is sufficient to prevent shrapnel from entering the occupant compartment, but the blast impact causes forces and accelerations on the seated occupants inside. $PAR
+
+The following is a list of injuries sustained by an occupant who experienced an underbody IED blast in a light armoured vehicle. $PAR
+\{ image( "UBC-BME-INJ-20-015.png", width=>500, height=>300 ) \} $PAR
+
+a) Find MAIS: $BR
+\(MAIS\) = \{ans_rule(10)\} 
+$PAR
+\{ $mc -> print_q() \}
+$BR
+\{ $mc -> print_a() \}
+$PAR
+c) Calculate ISS: $BR
+\(ISS\) = \{ans_rule(10)\}
+
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS( num_cmp( $MAIS ));
+
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc->correct_ans() ) );
+ANS( num_cmp( $ISS ));
+
+
+ENDDOCUMENT();        
