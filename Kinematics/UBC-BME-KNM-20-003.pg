@@ -63,7 +63,7 @@ $t2 = 1;
 #
 Context()->texStrings;
 BEGIN_TEXT
-Consider an individual doing hip abduction motions, shown in the image below. In the frontal plane, point O is the axis of rotation of the hip joint, line OB and OC are the the positions of the leg when it is stretched out at the highest and lowest elevations, respectively, and are the limits for the leg's range of motion. Line OA represents the neutral position, where the angle between OA and OB is equal to the angle between OA and OC - this angle is \(\theta_0\ = $theta0_deg \circ\). 
+Consider an individual doing hip abduction motions, shown in the image below. In the frontal plane, point O is the axis of rotation of the hip joint, line OB and OC are the the positions of the leg when it is stretched out at the highest and lowest elevations, respectively, and are the limits for the leg's range of motion. Line OA represents the neutral position, where the angle between OA and OB is equal to the angle between OA and OC - this angle is \(\theta_0\ = $theta0_deg^\circ\). 
 $PAR
 \{ image( "UBC-BME-KNM-20-003.png", width=>250, height=>270) \}
 $PAR

@@ -47,12 +47,12 @@ Context("Numeric");
 
 $ml = new_match_list();
 $ml->qa(
-"Minimum input of physical parameter that will create a detectable output change", "Sensitivity",
+"Minimum input change of physical parameter that will create a detectable output change", "Sensitivity",
 "Maximum and minimum values of applied parameter that can be measured", "Range",
 "Maximum difference that will exist between the actual value and the indicated value at the output of the sensor", "Accuracy",
 "Consistent difference in measured value vs. actual value", "Bias",
 "Degree of reproducibility of a measurement", "Precision",
-"Smallest detectable incremental change of input parameter that can be detected in the output signal", "Resolution"
+"Smallest measurable input change in a transducer", "Resolution"
 );
 
 # use pop-up-lists

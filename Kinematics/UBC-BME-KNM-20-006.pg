@@ -1,5 +1,5 @@
 ##DESCRIPTION
-## Tutorial 3 Question 1
+##
 ##ENDDESCRIPTION
 
 ##
@@ -68,18 +68,18 @@ $hbf = ($hbo + ($v_hJ*$dt) - (0.5*9.81*($dt**2)))*100;
 #
 Context()->texStrings;
 BEGIN_TEXT
-A child throws a ball to her pet dog, as shown in the figure below. At the time of releasing the ball using an underhand throw, \(t_0\), the centripetal acceleration of the hand is \(a_n = $an\) \(m/s^2\), the vertical distance between the ball and the ground is \(h_{b_0} = $hbo_cm\) cm, and the angle that the arm makes with the vertical is \(\theta = $theta\) degrees. The distance between the shoulder and the hand (or ball) is \(l_a = $la_cm\) cm. The dog catches the ball after a time interval of \(\Delta t\ = $dt\) s .
-
+A child throws a ball to her pet dog, as shown in the figure below. At the time of releasing the ball using an underhand throw, \(t_0\), the centripetal acceleration of the hand is \(a_n = $an\) \(m/s^2\), the vertical distance between the ball and the ground is \(h_{b_0} = $hbo_cm\) cm, and the angle that the arm makes with the vertical is \(\theta = $theta\) degrees. The distance between the shoulder and the hand (or ball) is \(l_a = $la_cm\) cm. The dog catches the ball after a time interval of \(\Delta t\ = $dt\) s. $PAR
+\{image("UBC-BME-KNM-20-006.png", width=>500, height=>262)\}
 $PAR
 a) Assuming the upper arm, forearm, and hand act as a single rigid body, calculate the velocity of the hand (or the velocity of the ball) at \(t_0\).
-$BR
-\(v\) = \{ ans_rule(8)\}$BBOLD i $EBOLD + \{ ans_rule(8)\} $BBOLD j $EBOLD \( m/s\)
+$PAR
+\(v\) = \{ ans_rule(8)\} \(\vec{i}\) + \{ ans_rule(8)\} \(\vec{j}\) \( m/s\)
 $PAR
 b) What is the horizontal distance travelled by the ball in the time interval \(\Delta t\)?
-$BR
+$PAR
 \(d_H\) = \{ ans_rule(10)\} \(cm\)
 $PAR
-c) At what height does the dog catch the ball (vertical distance between the ball and the ground after \(\Delta t\))? 
+c) At what height does the dog catch the ball (vertical distance between the ball and the ground after \(\Delta t\)? $PAR
 \(h_{b_f}\) = \{ ans_rule(10)\} \(cm\)
 $PAR
 END_TEXT

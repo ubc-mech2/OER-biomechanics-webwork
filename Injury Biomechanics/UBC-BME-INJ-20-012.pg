@@ -74,13 +74,13 @@ Context()->texStrings;
 BEGIN_TEXT
 \{ image( "UBC-BME-INJ-20-012.png", width=>200, height=>230 ) \}
 $PAR
-A) Determine the vehicle speed associated with the following crush pattern (uniform crush of $c m on 50% of vehicle front). Assume \(A = $A\) \(N/cm\), \(B = $B\) \(N/cm^2\), width = \($width_mm mm\), and mass = \($m kg\).
+a) Determine the vehicle speed associated with the following crush pattern (uniform crush of $c m on 50% of vehicle front). Assume \(A = $A\) \(N/cm\), \(B = $B\) \(N/cm^2\), width = \($width_mm mm\), and mass = \($m kg\).
 $PAR
 \(E\) = \{ans_rule(10)\} J
 $BR
 \(BEV\) = \{ans_rule(10)\} m/s = \{ans_rule(10)\} kph
 $PAR
-Now, find the energy to fracture the frontal bone in the skull with a large blunt object. Assume k = $k N/mm for the frontal bone over the range of displacement, and fracture force = $FF N (for large hemisphere impactor).
+b) Now, find the energy to fracture the frontal bone in the skull with a large blunt object. Assume k = $k N/mm for the frontal bone over the range of displacement, and fracture force = $FF N (for large hemisphere impactor).
 $PAR
 \(E_{fracture}\) = \{ans_rule(10)\} J
 

@@ -1,0 +1,117 @@
+##DESCRIPTION
+##  BMEG 230 Tutorial 2 Q1
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "parserPopUp.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Scaffold::Begin();
+BEGIN_TEXT
+A woman is positioned on a chair as shown below. Draw free body diagrams for various body segments. 
+$PAR 
+\{ image( "UBC-BME-STA-20-004-1.png", width=>230, height=>250 ) \}
+END_TEXT
+
+Section::Begin();
+$weight1 = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the Seat", "Ground Reaction Force"],"Weight of the Body",);
+$toprail = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the Seat", "Ground Reaction Force"],"Force of the Top Rail",);
+$seat = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the Seat", "Ground Reaction Force"],"Force of the Seat",);
+$ground = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the Seat", "Ground Reaction Force"],"Ground Reaction Force",);
+BEGIN_TEXT
+Label the forces in the free body diagram of the whole body of the person. $BR
+\{ image( "UBC-BME-STA-20-004-2.png", width=>250, height=>250 ) \}
+$PAR
+A: \{ $weight1->menu() \} $BR
+B: \{ $toprail->menu() \} $BR
+C: \{ $seat->menu() \} $BR
+D: \{ $ground->menu() \} 
+END_TEXT
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( $weight1->cmp() );
+ANS( $toprail->cmp() );
+ANS( $seat->cmp() );
+ANS( $ground->cmp() );
+
+Section::End();
+Section::Begin();
+$weight2 = PopUp(["?","Weight of the Thigh","Quadriceps Force","Hip Reaction Force", "Gluteus Maximus Force","Knee Reaction Force"],"Weight of the Thigh",);
+$hip = PopUp(["?","Weight of the Thigh","Quadriceps Force","Hip Reaction Force", "Gluteus Maximus Force","Knee Reaction Force"],"Hip Reaction Force",);
+$quad = PopUp(["?","Weight of the Thigh","Quadriceps Force","Hip Reaction Force", "Gluteus Maximus Force","Knee Reaction Force"],"Quadriceps Force",);
+$knee = PopUp(["?","Weight of the Thigh","Quadriceps Force","Hip Reaction Force", "Gluteus Maximus Force","Knee Reaction Force"],"Knee Reaction Force",);
+$gm = PopUp(["?","Weight of the Thigh","Quadriceps Force","Hip Reaction Force", "Gluteus Maximus Force","Knee Reaction Force"],"Gluteus Maximus Force",);
+BEGIN_TEXT
+Label the free body diagram of the left thigh only. $PAR
+\{image("UBC-BME-STA-20-004-3.png", width=>200, height=>200)\} $PAR
+A: \{ $knee->menu() \} $BR
+B: \{ $hip->menu() \} $BR
+C: \{ $weight2->menu() \} $BR
+D: \{ $gm->menu() \} $BR
+E: \{ $quad->menu() \} 
+END_TEXT
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( $knee->cmp() );
+ANS( $hip->cmp() );
+ANS( $weight2->cmp() );
+ANS( $gm->cmp() );
+ANS( $quad->cmp() );
+Section::End();
+
+Section::Begin();
+$weight3 = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reaction Force", "Achilles Tendon Force"],"Weight of the Foot",);
+$grf = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reaction Force", "Achilles Tendon Force"],"Ground Reaction Force",);
+$ankle = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reaction Force", "Achilles Tendon Force"],"Ankle Reaction Force",);
+$AT = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reaction Force", "Achilles Tendon Force"],"Achilles Tendon Force",);
+
+BEGIN_TEXT
+Label the free body diagram of the left thigh only. $PAR
+\{image("UBC-BME-STA-20-004-4.png", width=>200, height=>200)\} $PAR
+A: \{ $AT->menu() \} $BR
+B: \{ $ankle->menu() \} $BR
+C: \{ $weight3->menu() \} $BR
+D: \{ $grf->menu() \} $BR
+END_TEXT
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( $AT->cmp() );
+ANS( $ankle->cmp() );
+ANS( $weight3->cmp() );
+ANS( $grf->cmp() );
+Section::End();
+Scaffold::End();
+ENDDOCUMENT();        

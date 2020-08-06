@@ -68,17 +68,15 @@ $GRFy = 765.96;
 #
 Scaffold::Begin();
 BEGIN_TEXT
-Consider someone in the late stance phase of walking, with the mass of the foot being $m kg.  
-$PAR During the push-off, the following foot accelerations were recorded in the $BBOLD global coordinate sytem $EBOLD: $PAR
+Consider someone in the late stance phase of walking, with a recorded mass of the foot of $m kg. During the push-off, the following foot accelerations were recorded in the $BBOLD global coordinate sytem $EBOLD: $PAR
 \(a_x\) = $ax \(m/s^2\),    
-\(a_y\) = $ay \(m/s^2\),    $PAR
+\(a_y\) = $ay \(m/s^2\)    $PAR
 At the same time, the angular acceleration and mass moment of inertia was collected in the $BBOLD foot coordinate sytem $EBOLD: $PAR
 \(\alpha\) = $alpha \(rad/s^2\) , $BR
 \(I_z\) = $Iz \(kg-m^2\) about the flexion/extension axis
-
 $PAR
 In the image below, the coordinates of the foot are in centimetres in the force plate coordinate system (i.e. the X and Y directions indicated on the diagram). $PAR
-$BBOLD image here $EBOLD
+\{image("UBC-BME-KNT-20-008.png", height=>233, width=>300)\}
 
 END_TEXT
 Section::Begin(); 
@@ -169,8 +167,8 @@ Now, try to solve the problem in a different foot coordinate system. The followi
 $PAR
 \(R =\)  \( $R3 \) $PAR
 Tips: $BR
-- Remember that inertial terms are described for the $BBOLD anatomical coordinate system. $EBOLD A mass moment of inertia value is typically relative to an anatomical coordinate axis. Since the foot may be positioned randomly, it is not useful to describe the mass moment of inertia about a global axis. it is more useful to describe about, for instance, the foot flexion/extension axis. So, the R matrix here is important. $BR
-- Note that the anatomical axis is still mostly aligned with the force plate coordinate system. So, your answers shouldn't be too far off from your Part II answers. 
+\(\circ\) Remember that inertial terms are described for the $BBOLD anatomical coordinate system. $EBOLD A mass moment of inertia value is typically relative to an anatomical coordinate axis. Since the foot may be positioned randomly, it is not useful to describe the mass moment of inertia about a global axis. it is more useful to describe about, for instance, the foot flexion/extension axis. So, the R matrix here is important. $BR
+\(\circ\) Note that the anatomical axis is still mostly aligned with the force plate coordinate system. So, your answers shouldn't be too far off from your Part II answers. 
 $PAR
 Please enter your values as a vector in the form: \(<x, y, z>\). $PAR
 \(F_{ankle}\) = \{ans_rule(30)\} N $BR

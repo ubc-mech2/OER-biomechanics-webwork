@@ -66,12 +66,10 @@ $ml->choose(3);
 
 Context()->texStrings;
 BEGIN_TEXT
-Match the BEST suited transducer to each application
-$PAR
+Match the BEST suited transducer to each application: $BR
 \{ $ml->print_q() \}
 $BR
 \{ $ml->print_a() \}
-$PAR
 END_TEXT
 Context()->normalStrings;
 

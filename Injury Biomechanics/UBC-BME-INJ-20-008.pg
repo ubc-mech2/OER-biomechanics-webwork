@@ -45,60 +45,29 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-Context()->strings->add(regulatory=>{}, research =>{}, consumer=>{}, information =>{}, test=>{});
 
-$r1 = Compute("regulatory");
-$r2 = Compute("research");
+$mc = new_checkbox_multiple_choice();
+$mc -> qa (
+"Select the three main purposes of sled and crash testing:", 
+"Regulatory $BR",
+"Consumer Information $BR",                
+"Research $BR",
+);
+$mc -> extra(
+"Military $BR",
+"Technician Training $BR",
+);
 ##############################################################
 #
 #  Text
 #
 #
-Scaffold::Begin();
 Context()->texStrings;
 BEGIN_TEXT
-List the three main purposes of sled and crash testing. Pay attention to spelling! 
-$PAR
-1. \{ans_rule(15)\}\{ans_rule(15)\} $BITALIC Hint: two words (enter separately) $EITALIC 
+\{ $mc -> print_q() \}
+$BR
+\{ $mc -> print_a() \}
 END_TEXT
-ANS(Compute("consumer")->cmp());
-ANS(Compute("information")->cmp());
-Section::Begin();
-BEGIN_TEXT
-$PAR
-2. \{ans_rule(20)\} $BITALIC Hint: one word $EITALIC
-END_TEXT
-ANS($r1->cmp(
-   checker => sub{
-   my ($correct, $student, $ansHash) = @_;
-   my ($sx) = $student->value;
-   if (($sx == $r1) || ($sx == $r2)){
-   $stu1 = $sx;
-   return 1;
-   }
-   else {return 0;}
- }));   
-Section::End();
-Section::Begin();
-if ($stu1 == $r1){
-    BEGIN_TEXT
-    $PAR
-    3. \{ans_rule(20)\} $BITALIC Hint: one word $EITALIC
-    $PAR
-    END_TEXT
-    ANS($r2->cmp());
-    }
-if($stu1 == $r2){
-    BEGIN_TEXT
-    $PAR
-    3. \{ans_rule(20)\} $BITALIC Hint: one word $EITALIC
-    $PAR
-    END_TEXT
-    ANS($r1->cmp());
-    }
-Section::End();
-Context()->normalStrings;
-Scaffold::End();
 
 ##############################################################
 #
@@ -106,6 +75,11 @@ Scaffold::End();
 #
 #
 
+install_problem_grader(~~&std_problem_grader);
+
+$showPartialCorrectAnswers = 0;
+
+ANS( checkbox_cmp( $mc->correct_ans() ) );
 
 
 ENDDOCUMENT();        

@@ -54,8 +54,9 @@ BEGIN_TEXT
 
 Estimate the impact duration \(\Delta t\) for the following crash test resultant linear acceleration data:
 $PAR
-$BBOLD image here $EBOLD
+\{image("UBC-BME-INJ-20-001.png", width=>704, height=>432)\}
 $PAR
+$BITALIC This is temporary image - needs to be redrawn $EITALIC $BR
 \(\Delta t\) = \{ans_rule(10)\} ms
 END_TEXT
 Context()->normalStrings;

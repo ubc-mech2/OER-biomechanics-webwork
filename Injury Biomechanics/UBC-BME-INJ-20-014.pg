@@ -62,7 +62,7 @@ You are exploring the injuries associated with improvised explosive device (IED)
 You find the following curve for head acceleration of a seated occupant during an underbody IED blast: $PAR
 \{ image( "UBC-BME-INJ-20-014.png", width=>500, height=>350) \}
 $PAR
-Calculate HIC15 for this data (complete calculations for 15 ms, 9 ms, and 3 ms windows. $par
+Calculate HIC15 for this data (complete calculations for 15 ms, 9 ms, and 3 ms windows. $PAR
 \(HIC15_{15 ms}\) = \{ans_rule(10)\} $BR
 \(HIC15_{9 ms}\) = \{ans_rule(10)\} $BR
 \(HIC15_{3 ms}\) = \{ans_rule(10)\} $BR

@@ -1,0 +1,227 @@
+##DESCRIPTION
+##
+##ENDDESCRIPTION
+
+##KEYWORDS('', '', '')
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "PGchoicemacros.pl",
+   "parserRadioButtons.pl"
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$mcq1 = "a) What does \(\vec{r_B}\) equal?";
+$mc1 = RadioButtons([
+"\(\vec{r_A}\)",
+"\(\vec{r_{B/A}}\)",
+"\(\vec{r_A}\) + \(\vec{r_{B/A}}\)",
+"\(\vec{r_A}\) - \(\vec{r_{B/A}}\)",
+"\(\sqrt{\vec{r_A}^2 + \vec{r_{B/A}}^2}\)",
+],
+"\(\vec{r_A}\) + \(\vec{r_{B/A}}\)",
+separator => "$BR  ");
+
+$mc2 = new_checkbox_multiple_choice();
+$mc2 -> qa (
+"b) What is the absolute velocity of point A? Select all that apply.", 
+"\(\vec{v_A}\) $BR",
+"\(\frac{d \vec{r_A}}{dt}\) $BR",
+);
+$mc2 -> makeLast(
+"\(\vec{v_A}\) $BR",
+"\(\vec{v_B}\) $BR",
+"\(\vec{v_{B/A}}\) $BR",
+"\(\vec{v_A}\) + \(\vec{v_{B/A}}\) $BR",
+"\(\frac{d \vec{r_A}}{dt}\) $BR",
+"\(\frac{d \vec{r_B}}{dt}\) $BR",
+"\(\frac{d \vec{r_{B/A}}}{dt}\) $BR",
+"\(\frac{d \vec{r_A}}{dt} + \frac{d \vec{r_{B/A}}}{dt}\) $BR",
+);
+
+$mc3 = new_checkbox_multiple_choice();
+$mc3 -> qa (
+"c) What is the relative velocity of point B with respect to point A? Select all that apply.", 
+"\(\vec{v_{B/A}}\) $BR",
+"\(\frac{d \vec{r_{B/A}}}{dt}\) $BR",
+);
+$mc3 -> makeLast(
+"\(\vec{v_A}\) $BR",
+"\(\vec{v_B}\) $BR",
+"\(\vec{v_{B/A}}\) $BR",
+"\(\vec{v_A}\) + \(\vec{v_{B/A}}\) $BR",
+"\(\frac{d \vec{r_A}}{dt}\) $BR",
+"\(\frac{d \vec{r_B}}{dt}\) $BR",
+"\(\frac{d \vec{r_{B/A}}}{dt}\) $BR",
+"\(\frac{d \vec{r_A}}{dt} + \frac{d \vec{r_{B/A}}}{dt}\) $BR",
+);
+
+$mc4 = new_checkbox_multiple_choice();
+$mc4 -> qa (
+"d) What is the absoluate velocity of point B? Select all that apply.", 
+"\(\vec{v_B}\) $BR",
+"\(\vec{v_A}\) + \(\vec{v_{B/A}}\) $BR",
+"\(\frac{d \vec{r_B}}{dt}\) $BR",
+"\(\frac{d \vec{r_A}}{dt} + \frac{d \vec{r_{B/A}}}{dt}\) $BR",
+);
+$mc4 -> makeLast(
+"\(\vec{v_A}\) $BR",
+"\(\vec{v_B}\) $BR",
+"\(\vec{v_{B/A}}\) $BR",
+"\(\vec{v_A}\) + \(\vec{v_{B/A}}\) $BR",
+"\(\frac{d \vec{r_A}}{dt}\) $BR",
+"\(\frac{d \vec{r_B}}{dt}\) $BR",
+"\(\frac{d \vec{r_{B/A}}}{dt}\) $BR",
+"\(\frac{d \vec{r_A}}{dt} + \frac{d \vec{r_{B/A}}}{dt}\) $BR",
+);
+
+$mc5 = new_checkbox_multiple_choice();
+$mc5 -> qa (
+"e) What is the acceleration of A with respect to the fixed coordinate system? Select all that apply.", 
+"\(\vec{a_A}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2}\) $BR",
+);
+$mc5 -> makeLast(
+"\(\vec{a_A}\) $BR",
+"\(\vec{a_B}\) $BR",
+"\(\vec{a_{B/A}}\) $BR",
+"\(\vec{a_A}\) + \(\vec{a_{B/A}}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_B}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2} + \frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+);
+
+$mc6 = new_checkbox_multiple_choice();
+$mc6 -> qa (
+"f) What is the acceleration of B with respect to the fixed coordinate system? Select all that apply.", 
+"\(\vec{a_B}\) $BR",
+"\(\vec{a_A}\) + \(\vec{a_{B/A}}\) $BR",
+"\(\frac{d^2 \vec{r_B}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2} + \frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+);
+$mc6 -> makeLast(
+"\(\vec{a_A}\) $BR",
+"\(\vec{a_B}\) $BR",
+"\(\vec{a_{B/A}}\) $BR",
+"\(\vec{a_A}\) + \(\vec{a_{B/A}}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_B}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2} + \frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+);
+
+$mc7 = new_checkbox_multiple_choice();
+$mc7 -> qa (
+"g) What is the acceleration of A with respect to the moving coordinate system? Select all that apply.", 
+"\(\vec{a_{B/A}}\) $BR",
+"\(\frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+);
+$mc7 -> makeLast(
+"\(\vec{a_A}\) $BR",
+"\(\vec{a_B}\) $BR",
+"\(\vec{a_{B/A}}\) $BR",
+"\(\vec{a_A}\) + \(\vec{a_{B/A}}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_B}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+"\(\frac{d^2 \vec{r_A}}{dt^2} + \frac{d^2 \vec{r_{B/A}}}{dt^2}\) $BR",
+);
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+
+Consider a body moving in 2D space. The coordinate system XY (with origin O) is fixed, while the coordinate system xy (with origin A) is moving - point A is part of the moving body. The position vector of A with respect to the fixed coordinate frame is \(\vec{r_A}\). Consider another point B in the same moving body. The position vector of B with respect to the moving coordinate frame and the fixed coordinate system is \(\vec{r_{B/A}}\) and \(\vec{r_B}\), respectively. 
+$PAR
+\{image("UBC-BME-KNM-20-009.png", width=>600, height=>376)\}
+$PAR
+$mcq1 $BR
+\{$mc1->buttons\}
+$PAR
+\{ $mc2 -> print_q() \}
+$BR
+\{ $mc2 -> print_a() \}
+$PAR
+\{ $mc3 -> print_q() \}
+$BR
+\{ $mc3 -> print_a() \}
+$PAR
+\{ $mc4 -> print_q() \}
+$BR
+\{ $mc4 -> print_a() \}
+$PAR
+\{ $mc5 -> print_q() \}
+$BR
+\{ $mc5 -> print_a() \}
+$PAR
+\{ $mc6 -> print_q() \}
+$BR
+\{ $mc6 -> print_a() \}
+$PAR
+\{ $mc7 -> print_q() \}
+$BR
+\{ $mc7 -> print_a() \}
+
+
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+$showPartialCorrectAnswers = 0;
+ANS($mc1->cmp);
+
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc2->correct_ans() ) );
+ANS( checkbox_cmp( $mc3->correct_ans() ) );
+ANS( checkbox_cmp( $mc4->correct_ans() ) );
+ANS( checkbox_cmp( $mc5->correct_ans() ) );
+ANS( checkbox_cmp( $mc6->correct_ans() ) );
+ANS( checkbox_cmp( $mc7->correct_ans() ) );
+
+
+# default tolerance is .01 or one percent.
+
+
+ENDDOCUMENT();        
