@@ -61,11 +61,11 @@ $a = abs(($v2 - $v1)/$dt);
 $mc = new_multiple_choice();
 $mc->qa (
       "c) Which of the following acceleration profiles would best meet the outlined requirements?",
-      image("UBC-BME-INJ-20-020-1.png", height=>368, width => 464) . $BR,
+      image("UBC-BME-INJ-20-020-001.png", height=>368, width => 464) . $BR,
     );
 $mc->extra(
-      image("UBC-BME-INJ-20-020-2.png", height=>368, width => 464) . $BR,
-      image("UBC-BME-INJ-20-020-3.png", height=>368, width => 464) . $BR,
+      image("UBC-BME-INJ-20-020-002.png", height=>368, width => 464) . $BR,
+      image("UBC-BME-INJ-20-020-003.png", height=>368, width => 464) . $BR,
       );
 
 

@@ -1,0 +1,138 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+##
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "parserPopUp.pl",
+   "extraAnswerEvaluators.pl",
+   "answerHints.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+Context("Numeric");
+Context()->variables->add(t => 'Real');
+
+$beta_deg = 55;
+$beta = $beta_deg*pi/180;
+
+$theta_min_deg = random(10, 20, 1);
+$theta_min = $theta_min_deg*pi/180;
+
+$theta_max_deg = random(100, 120, 1);
+$theta_max = $theta_max_deg*pi/180;
+
+$tau = 2;
+$led_cm = random(30, 40, 1);
+$led = $led_cm/100;
+
+$t = 3.25;
+
+$theta = Formula("(($theta_min + $theta_max)/2) + (($theta_max-$theta_min)/2)*cos(pi*t)");
+$omega = $theta -> D('t');
+$alpha = $omega -> D('t');
+
+$theta_t = $theta->eval(t=>$t);
+$omega_t = $omega->eval(t=>$t);
+$alpha_t = $alpha->eval(t=>$t);
+
+$popup = PopUp(["?", "flexion", "extension"], "flexion");
+
+$gamma = (pi/2) - $beta - $theta_t;
+$r = Vector($led*cos($gamma), -$led*sin($gamma), 0);
+$vd = Vector(0, 0, $omega_t) x $r; 
+$norm_v = $vd->norm;
+
+$ad = (Vector(0, 0, $alpha_t) x $r) - (($omega_t**2)*$r);
+$norm_a = $ad->norm;
+##############################################################
+#
+#  Text
+#
+#
+Context()->texStrings;
+BEGIN_TEXT
+During a bicep curl exercise, flexion and extension at the elbow is repeatedly performed as shown in the figure. The upper arm is resting on an inclined bench, which is at an angle \(\beta = $beta_deg^\circ\) from the vertical, and there is no movement around the shoulder and wrist joints. The angle between the forearm and the inclined bench ranges from \(\theta_{min} = $theta_min_deg^\circ \) to \(\theta_{max} = $theta_max_deg^\circ\).
+$PAR
+The motion is cyclic (harmonic), starting with \(\theta = \theta_{max}\) (elbow flexion) at time \(t = 0 s\) and having a time period (time taken for each rep) \(\tau\) = $tau s. The distance between the elbow joint and the dumbbell is \(l_{e-d} = $led_cm\) cm. 
+$PAR
+\{image("UBC-BME-KNM-20-008.png", width=>700, height=>531)\}
+$PAR
+$BITALIC Please carry through at least 4 decimal places during calculations and answer all parts to three decimal places. $EITALIC
+$PAR
+a) Derive an expression for the angular displacement of the forearm. 
+$PAR
+\(\theta\) = \{ ans_rule(30)\} \(rad\)
+$PAR
+b) Derive an expression for the angular velocity of the forearm.
+$PAR
+\(\omega\) = \{ ans_rule(30)\} \(rad/s\)
+$PAR
+c) Derive an expression for the angular acceleration of the forearm.
+$PAR
+\(\alpha\) = \{ ans_rule(30)\} \(rad/s^2\)
+$PAR
+d) Calculate the angular displacement, velocity and acceleration of the forearm at t = $t s 
+$PAR
+\(\theta\) = \{ ans_rule(10)\} \(rad\) $BR
+\(\omega\) = \{ ans_rule(10)\} \(rad/s\) $BR
+\(\alpha\) = \{ ans_rule(10)\} \(rad/s^2\)
+$PAR
+e) At t = $t s, is the elbow at flexion or extension?
+$PAR
+\{ $popup->menu() \}
+$PAR
+f) Calculate the magnitude of velocity of the dumbbell at t = $t s
+$PAR
+\(|v_d|\) = \{ ans_rule(10)\} \(m/s\) $BR
+$PAR
+g) Calculate the magnitude of acceleration of the dumbbell at t = $t s
+$PAR
+\(|a_d|\) = \{ ans_rule(10)\} \(m/s^2\) $BR
+END_TEXT
+
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+
+ANS($theta->cmp()); 
+ANS($omega -> cmp()); 
+ANS($alpha->cmp()); 
+ANS($theta_t->cmp()); # 1% tolerance
+ANS($omega_t->cmp()); # 1% tolerance
+ANS($alpha_t->cmp()); # 1% tolerance
+ANS( $popup->cmp() );
+ANS($norm_v -> cmp());
+ANS($norm_a -> cmp());
+
+ENDDOCUMENT();        

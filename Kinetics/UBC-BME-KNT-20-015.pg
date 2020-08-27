@@ -1,0 +1,207 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+##KEYWORDS()
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl", 
+   "PGchoicemacros.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Scaffold::Begin();
+Context("Numeric");
+$m = 65;
+$lThigh = 0.66;
+$lShank = 0.72;
+$lFoot = 0.25;
+
+Context()->texStrings;
+BEGIN_TEXT
+A friend of yours is working towards running the “Grouse Grind” race. The round trip entails a leisurely jog up an 800m mountain on the North Shore and an exhilarating descent down the same, rocky path. After two months of training, your pal has developed significant pain in their knee joint which is exacerbated when they’re actually descending the mountain. You explain that this is simple biomechanics and proceed to prove your point to your unbelieving friend.
+$PAR 
+Using your portable force plate and video system, you collect some data for when your friend ascends and descends the hill. $BR
+\{image("UBC-BME-KNT-20-015-02.png", width=>633, height=>320 )\} 
+
+END_TEXT
+
+Section::Begin();
+$Fgy = random(700, 900, 10);
+$Fgx = random(25, 75, 5); 
+
+$mFoot = $m*0.0145;
+$mShank = $m*0.0465;
+$mThigh = $m*0.1;
+
+$lCogPFoot = 0.5*$lFoot;
+$lCogPShank = 0.433*$lShank;
+$lCogPThigh = 0.433*$lThigh;
+
+$Ps = 0.302*$lShank;
+$Is = $mShank*(0.217**2);
+$Pt = 0.323*$lThigh;
+$It = $mThigh*(0.214**2);
+
+$thetaFoot = 5;
+$thetaFootTibia = 75;
+$thetaTibiaFemur = 85;
+$axShank = -3;
+$ayShank = 0.3;
+$alphaShank = 10;
+$axThigh = -4;
+$ayThigh = 1;
+$alphaThigh = -10;
+
+$Ax = $Fgx;
+$Ay = $Fgy - ($mFoot*9.81);
+$a = $lCogPFoot*sin(5*pi/180);
+$b = $lCogPFoot*cos(5*pi/180);
+$Ma = $a*$Fgx - $b*$Fgy + $a*$Ax - $b*$Ay;
+
+$Kx = $axShank*$mShank + $Fgx;
+$Ky = $Ay - $mShank*9.81 - $mShank*$ayShank; 
+$Mk = -$Ma - ($Ay*0.140) - ($Ax*0.383) - ($Kx*0.293) - ($Ky*0.107) - ($Is*$alphaShank);
+$Mk_sol = abs($Mk);
+
+$Hx = $mThigh*$axThigh + $Kx;
+$Hy = $Ky - $mThigh*9.81 - $mThigh*$ayThigh; 
+$Mh = $It*$alphaThigh + $Kx*0.0968 - $Ky*0.361 + $Hx*0.0740 - $Hy*0.276 + $Mk_sol; 
+
+BEGIN_TEXT
+Use an inverse dynamics approach to determine the intersegmental loads at the ankle, knee, and hip joints as your friend ascends the hill. Your friend is $m kg with thigh, leg, and foot lengths of $lThigh, $lShank, and $lFoot m respectively. Use the anthropometric tables attached to this problem set to calculate CoG locations. $BR
+\{image("UBC-BME-KNT-20-015-01.png", width=>300, height=>319 )\} 
+$PAR
+Your portable force plate shows a vertical ground reaction force of $Fgy N, and a horizontal ground reaction force of $Fgx N posterior.
+$PAR
+$BBOLD Ankle: $EBOLD $BR
+\(A_x\) = \{ans_rule(10)\} N \(\rightarrow\) $BR
+\(A_y\) = \{ans_rule(10)\} N \(\downarrow\) $BR
+\(M_A\) = \{ans_rule(10)\} N \(\curvearrowleft\) $BR
+$PAR
+$BBOLD Knee: $EBOLD $BR
+\(K_x\) = \{ans_rule(10)\} N \(\rightarrow\) $BR
+\(K_y\) = \{ans_rule(10)\} N \(\downarrow\)$BR
+\(M_K\) = \{ans_rule(10)\} N \(\curvearrowleft\) $BR
+$PAR
+$BBOLD Hip: $EBOLD $BR
+\(H_x\) = \{ans_rule(10)\} N \(\rightarrow\) $BR
+\(H_y\) = \{ans_rule(10)\} N \(\downarrow\)$BR
+\(M_H\) = \{ans_rule(10)\} N\(\curvearrowleft\) $BR
+END_TEXT
+ANS(num_cmp($Ax));
+ANS(num_cmp($Ay));
+ANS(num_cmp($Ma));
+ANS(num_cmp($Kx));
+ANS(num_cmp($Ky));
+ANS(num_cmp($Mk_sol));
+ANS(num_cmp($Hx));
+ANS(num_cmp($Hy));
+ANS(num_cmp($Mh));
+Section::End();
+
+Section::Begin();
+$Fgy2 = random(700, 900, 10);
+$Fgx2 = random(200, 400, 10);
+
+$axShank2 = 45;
+$ayShank2 = -1;
+$alphaShank2 = 90;
+$axThigh2 = 10;
+$ayThigh2 = 0;
+$alphaThigh2 = 2; 
+
+$Ay2 = $Fgy2 - ($mFoot*9.81);
+$Ax2 = $Fgx2;
+$c = $lCogPFoot*sin(20*pi/180);
+$d = $lCogPFoot*cos(20*pi/180);
+$Ma2 = $Fgy2*$d - $Fgx2*$c + $Ay2*$d - $Ax2*$c;
+$Ma_sol2 = -$Ma2;
+
+$Kx2 = $axShank2*$mShank + $Fgx2;
+$Ky2 = $Ay2 - $mShank*9.81 - $mShank*$ayShank2; 
+$Mk2 = $Ma2 - $Kx2*0.312 - $Ax2*0.408 - ($Is*$alphaShank2);
+$Mk_sol2 = abs($Mk2);
+
+$Hx2 = $mThigh*$axThigh2 + $Kx2;
+$Hy2 = $Ky2 - $mThigh*9.81 - $mThigh*$ayThigh2; 
+$Mh2 = $It*$alphaThigh2 - $Ky2*0.351 + $Kx2*0.128 + $Hx2*0.0978 - $Hy2*0.269 + $Mk_sol2;
+
+BEGIN_TEXT
+Now, use an inverse dynamics approach to determine the intersegmental loads at the ankle, knee, and hip joints as your friend descends the hill.
+\{image("UBC-BME-KNT-20-015-04.png", width=>300, height=>290 )\} 
+$PAR
+Your portable force plate shows a vertical ground reaction force of $Fgy2 N, and a horizontal ground reaction force of $Fgx2 N posterior.
+$PAR
+$BBOLD Ankle: $EBOLD $BR
+\(A_x\) = \{ans_rule(10)\} N \(\rightarrow\) $BR
+\(A_y\) = \{ans_rule(10)\} N \(\downarrow\) $BR
+\(M_A\) = \{ans_rule(10)\} N \(\curvearrowleft\) $BR
+$PAR
+$BBOLD Knee: $EBOLD $BR
+\(K_x\) = \{ans_rule(10)\} N \(\rightarrow\) $BR
+\(K_y\) = \{ans_rule(10)\} N \(\downarrow\)$BR
+\(M_K\) = \{ans_rule(10)\} N \(\curvearrowleft\) $BR
+$PAR
+$BBOLD Hip: $EBOLD $BR
+\(H_x\) = \{ans_rule(10)\} N \(\rightarrow\) $BR
+\(H_y\) = \{ans_rule(10)\} N \(\downarrow\)$BR
+\(M_H\) = \{ans_rule(10)\} N\(\curvearrowleft\) $BR
+END_TEXT
+ANS(num_cmp($Ax2));
+ANS(num_cmp($Ay2));
+ANS(num_cmp($Ma_sol2));
+ANS(num_cmp($Kx2));
+ANS(num_cmp($Ky2));
+ANS(num_cmp($Mk_sol2));
+ANS(num_cmp($Hx2));
+ANS(num_cmp($Hy2));
+ANS(num_cmp($Mh2));
+Section::End();
+
+Section::Begin();
+$mc = new_multiple_choice();
+$mc->qa(
+"Compare your results for the forces of the knee. Which of the following is true?", 
+"\(K_{x, downhill} \approx K_{x, uphill}\)"
+);
+$mc->makeLast(
+"\(K_{x, downhill} >> K_{x, uphill}\)",
+"\(K_{x, downhill} \approx K_{x, uphill}\)",
+"\(M_{K, downhill} > M_{K, uphill}\)",
+);
+
+BEGIN_TEXT
+\{ $mc->print_q() \}
+$BR
+\{ $mc->print_a() \}
+END_TEXT
+$showPartialCorrectAnswers = 0;
+ANS( radio_cmp( $mc->correct_ans() ) );
+Section::End();
+
+Scaffold::End();
+
+ENDDOCUMENT();        

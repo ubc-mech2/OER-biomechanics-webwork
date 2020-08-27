@@ -1,0 +1,102 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Scaffold::Begin();
+$dmx_mm = random(45, 55, 1);
+$dmy_mm = random(3, 6, 1);
+$dCOMx_mm = random(15, 25, 1);
+$dCOMy_mm = random(50, 65, 1);
+$mh = random(4, 6, 0.1);
+$beta_deg = random(40, 60, 1);
+$theta_deg = random(10, 20, 1);
+$beta = $beta_deg*pi/180;
+$theta = $theta_deg*pi/180;
+
+$dmx = $dmx_mm/1000;
+$dmy = $dmy_mm/1000;
+$dCOMx = $dCOMx_mm/1000;
+$dCOMy = $dCOMy_mm/1000;
+
+BEGIN_TEXT 
+Prolonged phone use while flexing the neck stresses the cervical spine, leading to persistent neck pain, also called “text neck” syndrome. Compare the muscle and joint forces during neck flexion (e.g. while looking down on a phone) with the forces during a neutral neck position.
+$PAR
+As shown in the figure, the neck extensor muscles attach at \(M\), a distance \(d_{mx}\) = $dmx_mm mm posterior and \(d_{my}\) = $dmy_mm mm superior to the atlantooccipital joint, \(J\) (joint between the atlas or first cervical vertebra and the occipital bone of the skull). The center of mass of the head is located \(d_{COMx}\) = $dCOMx_mm mm anterior and \(d_{COMy}\) = $dCOMy_mm mm superior to the atlantooccipital joint. The mass of the head is \(m_h\) = $mh kg. The neck extensor muscles act at an angle \(\theta\) = $theta_deg \(^\circ\) from a line parallel to the axis of the neck. In the flexed position, the neck makes an angle \(\beta\) = $beta_deg \(^\circ\) with the vertical. $PAR
+\{image("UBC-BME-STA-20-011.png", width=>1272, height=>626)\}
+END_TEXT
+
+Section::Begin("Assumptions");
+BEGIN_TEXT
+
+END_TEXT
+Section::End();
+
+Section::Begin("Neutral Position");
+$wh = $mh*9.81;
+$Fm = $dCOMx*$wh/($dmx*cos($theta) - ($dmy*sin($theta)));
+$Fjx = $Fm*sin($theta);
+$Fjy = $Fm*cos($theta) + $wh;
+$Fj = sqrt($Fjx**2 + $Fjy**2);
+BEGIN_TEXT
+a) Calculate the force of the neck extensor muscles, when the neck is in the neutral position.
+$BR
+\(F_m\) = \{ans_rule(5)\} N $PAR
+b) Calculate the net joint reaction force at the atlantooccipital joint in the neutral position.
+$BR
+\(F_J\) = \{ans_rule(5)\} N
+END_TEXT
+ANS(num_cmp($Fm));
+ANS(num_cmp($Fj));
+Section::End();
+
+Section::Begin("Flexed Neck");
+$Fm2 = ($wh*($dCOMx*cos($beta) + $dCOMy*sin($beta)))/($dmx*cos($theta) - $dmy*sin($theta));
+$Fjx2 = $Fm2*sin($theta) + $wh*sin($beta);
+$Fjy2 = $Fm2*cos($theta) + $wh*cos($beta); 
+$Fj2 = sqrt($Fjx2**2 + $Fjy2**2);
+BEGIN_TEXT
+c) Calculate the force of the neck extensor muscles, when the neck is flexed at an angle \(\beta\) = $beta_deg \(^\circ\).
+$PAR
+\(F_m\) = \{ans_rule(5)\} N $PAR
+d) Calculate the net joint reaction force at the atlantooccipital joint when the neck is flexed at an angle \(\beta\) = $beta_deg \(^\circ\).
+$BR
+\(F_J\) = \{ans_rule(5)\} N 
+END_TEXT
+ANS(num_cmp($Fm2));
+ANS(num_cmp($Fj2));
+Section::End();
+
+Scaffold::End();
+ENDDOCUMENT();        

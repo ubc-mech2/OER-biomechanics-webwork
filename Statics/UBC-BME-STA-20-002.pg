@@ -30,17 +30,10 @@ loadMacros(
    #"PGcourse.pl",      # Customization file for the course
 );
 
-# Print problem number and point value (weight) for the problem
 TEXT(beginproblem());
-
-# Show which answers are correct and which ones are incorrect
 $showPartialCorrectAnswers = 1;
 
 ##############################################################
-#
-#  Setup
-#
-#
 Scaffold::Begin();
 BEGIN_TEXT
 Two critical dimensions of hip prostheses are the caput-collum-diaphyseal (CCD) angle and neck length (L). To visualize this, please reference the coordinate system found \{htmlLink("http://www.wiki.orthoload.com/index.php/File:CoorSysAtLeftFemu_big.png", "here")\}. 
@@ -56,7 +49,6 @@ $PAR
 Assume the hip abductor muscle inserts at point P1 (see coordinate system link) and the length of the leg (from P1 to the foot) is \(0.52H\). You can also assume the weight of the femur is \(0.17W\) and that the location of the center of mass of the femur is \(0.2H\) distal to the point P1 (along the length of the leg). 
 $PAR
 Note: the femur is not necessarily perfectly vertical as represented in the coordinate system diagram, and that the z and x aces align with the femoral shaft!
-
 END_TEXT
 
 Section::Begin();
@@ -104,7 +96,6 @@ ANS(Real($x_high)->cmp(
    }
    else {return 0;}
  }));   
-
 Section::End(); 
 
 Section::Begin();

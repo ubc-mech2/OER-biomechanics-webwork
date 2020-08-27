@@ -1,0 +1,193 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "PGchoicemacros.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+
+Context("Numeric");
+Scaffold::Begin();
+$M = 62;
+BEGIN_TEXT
+A reverse shoulder arthroplasty is performed to restore stability in the shoulder (glenohumeral) joint, e.g. during rotator cuff tears when the stability and motion of the shoulder joint is compromised. The reverse shoulder implant/prosthesis inverts the anatomical concavities of the shoulder joint by introducing a convex surface to the glenoid and a concave surface to the humeral head. Compare a normal physiologically functioning shoulder to one with a reverse shoulder implant, by answering the following questions. $PAR
+\{image("UBC-BME-STA-20-010.png", width=>800 , height=>444)\}
+END_TEXT
+
+Section::Begin("Anthropometric Data");
+$wa = 0.05*$M*9.81; 
+$dCOM = 0.3;
+$dd = 0.6;
+
+BEGIN_TEXT
+a) Search anthropometric charts to find approximate/average values of $BR
+\(\quad i)\) the weight of the arm (\(w_a\)): \{ans_rule(5)\} N $BR
+\(\quad ii)\) distance between the arm center of mass and the shoulder joint (\(d_{COM}\)): \{ans_rule(5)\} m $BR
+\(\quad iii)\) the distance between the shoulder joint and the wrist joint or dumbbell (\(d_d\)): \{ans_rule(5)\} m $BR
+END_TEXT
+
+ANS(num_cmp($wa));
+ANS(num_cmp($dCOM));
+ANS(num_cmp($dd));
+Section::End();
+
+Section::Begin("Case 1: Normal physiologically functioning shoulder");
+$md = random(3, 6, 1); 
+$beta_deg = random(30, 50, 1);
+$beta = $beta_deg*pi/180;
+$theta_deg = random(10, 20, 1); 
+$theta = $theta_deg*pi/180;
+$dy = random(0.003, 0.006, 0.001);
+$dy_mm = $dy*1000;
+$dm = random(0.12, 0.16, 0.01);
+$dm_cm = $dm*100;
+
+$wd = $md*9.81;
+
+$Fm = ($wa*$dy*cos($beta) + $wd*$dy*cos($beta) + $wa*$dCOM*sin($beta) + $wd*$dd*sin($beta))/($dy*cos($theta) + $dm*sin($theta)); 
+
+$Fjx = $wa*sin($beta) + $wd*sin($beta) - $Fm*sin($theta); 
+$Fjy = $wa*cos($beta) + $wd*cos($beta) - $Fm*cos($theta);
+
+$JP = ($dy+$dm*tan($theta))*cos($theta); 
+$JP_mm = $JP*1000; 
+
+BEGIN_TEXT
+When the shoulder is abducted to an angle of \(\beta = $beta_deg^\circ \) with respect to the vertical, the deltoid muscle holds the arm in place. The hand is grasping a dumbbell of mass \(m_d = $md kg\). Assume that the deltoid muscle makes an angle  \(\theta = $theta_deg^\circ\) with the arm. The center of rotation of the shoulder is located \(d_y = $dy_cm mm\) away from the axis of the humerus, and the deltoid muscle is attached at a distance \(d_M = $dm_mm m\) from the center of rotation (along the axis of the humerus).
+$PAR
+b) Calculate the force applied by the deltoid, when the shoulder is abducted to an angle of $beta_deg\(^\circ\) with respect to the vertical, while the hand is grasping the dumbbell.
+$BR
+\(F_m\) = \{ans_rule(10)\} N 
+$PAR
+c) Calculate the compressive and shear forces at the shoulder joint. $BR
+\(F_{Jx}\) = \{ans_rule(10)\} N $BR
+\(F_{Jy}\) = \{ans_rule(10)\} N $BR
+$PAR
+d) Calculate the moment arm of the deltoid muscle. $BR
+\(d_{arm}\) = \{ans_rule(10)\} mm $BR
+END_TEXT
+ANS(num_cmp($Fm));
+ANS(Real($Fjx)->cmp(
+     checker => sub {
+     my ($correct,$student,$ansHash) = @_;
+     my ($sx) = $student->value; 
+     return ($sx == $Fjx || $sx == -$Fjx ? 1 : 0); 
+     }
+   ));
+ANS(Real($Fjy)->cmp(
+     checker => sub {
+     my ($correct,$student,$ansHash) = @_;
+     my ($sx) = $student->value; 
+     return ($sx == $Fjy || $sx == -$Fjy ? 1 : 0); 
+     }
+   ));
+ANS(num_cmp($JP_mm,
+     tol => 0.1, 
+     tolType => "absolute",
+));
+Section::End();
+
+Section::Begin("Case 2: Shoulder joint with reverse shoulder prosthesis");
+$dCORm_mm = random(20, 28, 1);
+$dCORm = $dCORm_mm/1000;
+$dCORi_mm = random(8, 12, 1);
+$dCORi = $dCORi_mm/1000;
+$dHi_mm = random(13, 16, 1);
+$dHi = $dHi_mm/1000; 
+
+$dy2 = $dy + $dCORm;
+$dm2 = $dm + $dHi - $dCORi; 
+$dCOM2 = $dCOM + $dHi - $dCORi;
+$dd2 = $dd + $dHi - $dCORi; 
+
+$Fm2 = ($wa*$dy2*cos($beta) + $wd*$dy2*cos($beta) + $wa*$dCOM2*sin($beta) + $wd*$dd2*sin($beta))/($dy2*cos($theta) + $dm2*sin($theta)); 
+
+$Fjx2 = $wa*sin($beta) + $wd*sin($beta) - $Fm2*sin($theta); 
+$Fjy2 = $wa*cos($beta) + $wd*cos($beta) - $Fm2*cos($theta);
+
+$JP2 = ($dy2+$dm2*tan($theta))*cos($theta); 
+$JP2_mm = $JP2*1000;
+
+$mc = new_checkbox_multiple_choice();
+$mc -> qa (
+"h) Compared to the normal functioning shoulder, in the reverse shoulder prosthesis (select all that apply):", 
+"The moment arm of the deltoid increases",
+"The efficiency of the deltoid muscle decreases",                
+);
+$mc -> makeLast(
+"The moment arm of the deltoid increases",
+"The moment arm of the deltoid decreases",
+"The moment arm of the deltoid remains the same",
+"The efficiency of the deltoid muscle increases (i.e. the force in part e is greater than part b)",
+"The efficiency of the deltoid muscle decreases",  
+"The efficiency of the deltoid muscle remains the same",
+);
+
+BEGIN_TEXT
+During a reverse shoulder arthroplasty, the center of rotation of the glenohumeral joint is shifted medially by \(d_{COR, m} = $dCORm_mm mm\) and shifted inferiorly by \(d_{COR, i} = $dCORi_mm mm\). After attaching the prosthesis, the humerus also shifts inferiorly by \(d_H = $dHi_mm mm\) to account for the change in anatomical concavities (some prostheses also result in a medial shift in the humerus, but we can ignore that here).   
+$PAR
+e) Calculate the force applied by the deltoid in the reverse shoulder prosthesis case, with the same shoulder abduction and same dumbbell as the previous case. $BR
+\(F_m\) = \{ans_rule(10)\} N
+$PAR
+f) Calculate the compressive and shear forces at the shoulder joint. $BR
+\(F_{Jx}\) = \{ans_rule(10)\} N $BR
+\(F_{Jy}\) = \{ans_rule(10)\} N
+$PAR
+g) Calculate the moment arm of the deltoid muscle. $BR
+\(d_{arm}\) = \{ans_rule(10)\} mm
+$PAR
+\{ $mc -> print_q() \} $BR
+\{ $mc -> print_a() \}
+END_TEXT
+ANS(num_cmp($Fm2));
+ANS(Real($Fjx2)->cmp(
+     checker => sub {
+     my ($correct,$student,$ansHash) = @_;
+     my ($sx) = $student->value; 
+     return ($sx == $Fjx2 || $sx == -$Fjx2 ? 1 : 0); 
+     }
+   ));
+ANS(Real($Fjy2)->cmp(
+     checker => sub {
+     my ($correct,$student,$ansHash) = @_;
+     my ($sx) = $student->value; 
+     return ($sx == $Fjy2 || $sx == -$Fjy2 ? 1 : 0); 
+     }
+   ));
+ANS(num_cmp($JP2_mm,
+     tol => 0.1, 
+     tolType => "absolute",
+));
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc->correct_ans() ) );
+Section::End();
+
+Scaffold::End();
+ENDDOCUMENT();        

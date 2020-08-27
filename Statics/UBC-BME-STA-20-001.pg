@@ -26,17 +26,10 @@ loadMacros(
    #"PGcourse.pl",      # Customization file for the course
 );
 
-# Print problem number and point value (weight) for the problem
 TEXT(beginproblem());
-
-# Show which answers are correct and which ones are incorrect
 $showPartialCorrectAnswers = 1;
 
 ##############################################################
-#
-#  Setup
-#
-#
 Context("Numeric");
 
 $m = random(60, 70, 1);
@@ -54,14 +47,8 @@ $Fy_m = ($w *($l_w - $l_b)) / ($l_m + $l_b) ;
 $Fy_j = $Fy_m + $w;
 
 ##############################################################
-#
-#  Text
-#
-#
-
 Context()->texStrings;
 BEGIN_TEXT
-
 The femorotibial joint is a synovial hinge joint between the distal femur and  proximal tibia.
 $PAR
 For a $m \(kg\) person standing on one foot, determine the tension in the gluteus maximus \(F_M\) and bone force \(F_R\) in this position if \(F_R\) acts $l_b_cm \(cm\) medially from the centre of rotation, which is circled in red below. The lever arm for weight and muscle forces are $l_w_cm \(cm\) and $l_m_cm \(cm\) from the femorotibial joint's center of rotation, respectively. 
@@ -76,15 +63,8 @@ END_TEXT
 Context()->normalStrings;
 
 ##############################################################
-#
-#  Answers
-#
-#
 ANS($popup->cmp());
 ANS(num_cmp($Fy_j, reltol => 0.01)); 
 ANS(num_cmp($Fy_m, reltol => 0.01));
-# relative tolerance --3.1412 is incorrect but 3.1413 is correct
-# default tolerance is .01 or one percent.
-
 
 ENDDOCUMENT();        

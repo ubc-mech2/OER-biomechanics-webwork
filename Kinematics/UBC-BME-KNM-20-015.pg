@@ -1,0 +1,112 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "PGchoicemacros.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+$omegaU = random(1.5, 4, 0.1);
+$lf_cm = random(28, 32, 1);
+$lf = $lf_cm/100;
+$lu_cm = random(33, 36, 1);
+$lu = $lu_cm/100;
+$thetaf = random(60, 75, 1);
+$thetau = random(40, 55, 1);
+
+$mc = new_multiple_choice();
+$mc->qa(
+"a) Based on the kinematic constraints specified, how are \(\omega_f\) and \(\omega_u\) related at time \(t\)?", 
+"\(\omega_f = -\frac{\omega_u l_u sin\theta_u}{l_f sin\theta_f}\)",
+);
+$mc->extra(
+"\(\omega_f = \omega_u\)",
+"\(\omega_f = -\omega_u\)",
+"\(\omega_f = \frac{\omega_u l_u}{l_f}\)",
+"\(\omega_f = -\frac{\omega_u l_u}{l_f}\)",
+"\(\omega_f = \frac{\omega_u l_u sin\theta_u}{l_f sin\theta_f}\)",
+);
+
+$omegaF = (-$omegaU*$lu*sin($thetau*pi/180))/($lf*sin($thetaf*pi/180));
+$vE_i = (-$omegaF*$lf*sin($thetaf*pi/180));
+$vE_j = (-$omegaF*$lf*cos($thetaf*pi/180));
+$vS_i = (-$omegaF*$lf*sin($thetaf*pi/180)) - ($omegaU*$lu*sin($thetau*pi/180));
+$vS_j = (-$omegaF*$lf*cos($thetaf*pi/180)) + ($omegaU*$lu*cos($thetau*pi/180));
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+During a push up exercise, the arm can be modelled as a multi-link system forming a closed kinematic chain, with the distal end of the chain (hand and wrist) fixed. At time \(t\), the shoulder joint is found to move vertically downwards, while the forearm and upper arm have angular velocities \(\omega_f\) and \(\omega_u\), respectively (assume planar movement). As shown in the figure, the lengths of the forearm and upper arm are \(l_f\) and \(l_u\), respectively, and the angles made by the forearm and upper arm are \(\theta_f\) and \(\theta_u\), respectively.
+$PAR
+\{image("UBC-BME-KNM-20-015.png", width=>700, height=>372)\}
+$PAR
+At time \(t\), \(\omega_u = $omegaU rad/s\), \(l_f = $lf_cm cm\), \(l_u = $lu_cm cm\), \(\theta_f = $thetaf^\circ\), and \(\theta_u = $thetau^\circ\). 
+$PAR
+\{ $mc->print_q() \}
+$BR
+\{ $mc->print_a() \}
+$PAR
+b) What is the magnitude of the velocity of the elbow joint at time \(t\)? $BR
+\{ans_rule(5)\} \(\hat{i}\) + \{ans_rule(5)\} \(\hat{j}\) m/s
+$PAR
+c) What is the magnitude of the velovity of the shoulder joint at time \(t\)? $BR
+\{ans_rule(5)\} \(\hat{i}\) + \{ans_rule(5)\} \(\hat{j}\) m/s
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+$showPartialCorrectAnswers = 0;
+ANS( radio_cmp( $mc->correct_ans() ) );
+$showPartialCorrectAnswers = 1;
+ANS (num_cmp( $vE_i, reltol=> 1.5));
+ANS (num_cmp( $vE_j, reltol=> 2));
+ANS (num_cmp( $vS_i, reltol=> 1.5));
+ANS (num_cmp( $vS_j, reltol=> 1.5));
+
+
+# relative tolerance --3.1412 is incorrect but 3.1413 is correct
+# default tolerance is .01 or one percent.
+
+
+ENDDOCUMENT();        

@@ -1,0 +1,146 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "PGchoicemacros.pl",
+   "PGchoicemacros.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+Context("Numeric");
+
+$m = 2;
+$mArm = random(2, 3, 0.1);
+$lArm = 0.6;
+$dArm = 0.25;
+$dDelt = 0.10;
+$theta_deg = random(20, 30, 1); 
+$theta = $theta_deg*pi/180;
+
+$dArm_cm = $dArm*100;
+$dDelt_cm = $dDelt*100;
+
+Scaffold::Begin();
+BEGIN_TEXT
+A weightlifting friend of yours lets you know that they are experiencing severe pain when doing certain shoulder exercises. The worst culprit seems to be abduction. You explain that their pain may be due to excessive loads in the shoulder joint during the activity.
+$PAR 
+\{ image( "UBC-BME-STA-20-005.png", width=>330, height=>240 ) \}
+END_TEXT
+
+Section::Begin();
+$mc1 = new_checkbox_multiple_choice();
+$mc1 -> qa (
+"What are the assumptions we need to make to solve this problem? Select all that apply.", 
+"This is a 2-D problem",
+"The deltoid is the only muscle acting",                
+"The glenohumeral joint is frictionless",
+);
+$mc1 -> extra(
+"This is a 3-D problem",
+"There is a frictional force acting in the negative x direction",
+"The tricep is the only muscle acting",
+"The bicep is the only muscle acting",
+);
+
+$Fm = (($m*9.81*$lArm) + ($mArm*9.81*$dArm))/($dDelt*sin($theta));
+$Fy = -$Fm*sin($theta) + ($mArm*9.81) + ($m*9.81);
+$Fx = $Fm*cos($theta);
+
+BEGIN_TEXT
+Use the diagram shown to calculate the glenohumeral joint loads when holding
+the $m kg mass stationary. The upper arm is $mArm kg, acting $dArm_cm cm from the shoulder joint while the deltoid muscle is supporting the arm and attaches $dDelt_cm cm from the joint at a $theta_deg degree angle.
+$PAR
+\{ $mc1 -> print_q() \}
+$BR
+\{ $mc1 -> print_a() \}
+$PAR
+\(F_{Jx}\) = \{ans_rule(10)\} N $BR
+\(F_{Jy}\) = \{ans_rule(10)\} N
+END_TEXT
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc1->correct_ans() ) );
+$showPartialCorrectAnswers = 1;
+ANS(num_cmp($Fx));
+ANS(num_cmp($Fy));
+Section::End();
+
+Section::Begin();
+$mc2 = new_checkbox_multiple_choice();
+$mc2 -> qa (
+"What are some strategies to reduce the joint loads but continue to exercise the deltoid muscle?", 
+"Performing the same motion with a bent elbow",
+"Reduce load mass",                
+"Consider doing isometric exercise",
+);
+$mc2 -> extra(
+"Increasing the load moment arm",
+"Raising the arm so the arm is held at an angle greater than 90 degrees with the body",
+);
+
+BEGIN_TEXT
+$PAR
+\{ $mc2->print_q() \}
+$BR
+\{ $mc2->print_a() \}
+END_TEXT
+
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc2->correct_ans() ) );
+Section::End();
+
+Section::Begin();
+$mc3 = new_multiple_choice();
+$mc3->qa(
+"Using the Orthoload Data, what would be the approximate resultant joint loading for this situation?", 
+"1412 N"
+);
+$mc3->makeLast("407 N",
+"706 N", 
+"1059 N", 
+"1412 N", 
+"1780 N");
+
+BEGIN_TEXT
+Compare the loads that you calculated with those in patients from the \{ htmlLink( "https://orthoload.com/database", "Orthoload Database" ) \}. Use data from patient S3L for a shoulder implant abduction with a 2 kg weight held at 90\(^\circ\).  
+$PAR
+\{ $mc3->print_q() \}
+$BR
+\{ $mc3->print_a() \}
+END_TEXT
+
+$showPartialCorrectAnswers = 0;
+ANS( radio_cmp( $mc3->correct_ans() ) );
+Section::End();
+
+Scaffold::End();
+ENDDOCUMENT();        

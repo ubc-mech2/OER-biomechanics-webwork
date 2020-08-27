@@ -38,13 +38,13 @@ $showPartialCorrectAnswers = 1;
 #
 Context("Numeric");
 
-$omega = 8;
-$alpha = 400;
+$omega = random(6, 10, 1);
+$alpha = random(350, 420, 1);
 $mLL = 7;
 $I0 = 0.35;
-$d = 0.04;
+$d = random(0.03, 0.05, 0.01);
 $d_cm = $d*100;
-$r = 0.22;
+$r = random(0.20, 0.30, 0.01);
 $r_cm = $r*100;
 
 $I_COG = $I0 - ($mLL*($r**2));

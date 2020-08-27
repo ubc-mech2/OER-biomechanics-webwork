@@ -2,8 +2,6 @@
 ##  
 ##ENDDESCRIPTION
 
-##KEYWORDS('')
-
 ## DBsubject('')
 ## DBchapter('')
 ## DBsection('')
@@ -15,7 +13,6 @@
 ## AuthorText1('')
 ## Section1('')
 ## Problem1('')
-
 ########################################################################
 
 DOCUMENT();      
@@ -23,6 +20,7 @@ DOCUMENT();
 loadMacros(
    "PGstandard.pl",     # Standard macros for PG language
    "MathObjects.pl",
+   "PGchoicemacros.pl",
    #"source.pl",        # allows code to be displayed on certain sites.
    #"PGcourse.pl",      # Customization file for the course
 );
@@ -39,24 +37,25 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-
-$max = 400;
-$min = 350;
-
+$mc = new_multiple_choice();
+$mc->qa(
+"What is the velocity of the swimmer relative to the moving river, \(\vec{v_{R/S}}\)?", 
+"\(\vec{v_{R/S}} = \vec{v_S} - \vec{v_R}\)"
+);
+$mc->extra(
+"\(\vec{v_{R/S}} = \vec{v_R} - \vec{v_S}\)",
+"\(\vec{v_{R/S}} = \vec{v_R} + \vec{v_S}\)",
+);
 ##############################################################
 #
 #  Text
-#
-#
 
 Context()->texStrings;
 BEGIN_TEXT
-
-Estimate the impact duration \(\Delta t\) for the following crash test resultant linear acceleration data:
-$PAR
-\{image("UBC-BME-INJ-20-001-1.png", width=>704, height=>432)\}
-$PAR
-\(\Delta t\) = \{ans_rule(10)\} ms
+A swimmer is swimming across a river with a velocity relative to the river bank (stationary) \(\vec{v_S}\). The velocity of the river (relative to the bank) is \(\vec{v_R}\).
+\{ $mc->print_q() \}
+$BR
+\{ $mc->print_a() \}
 END_TEXT
 Context()->normalStrings;
 
@@ -65,14 +64,8 @@ Context()->normalStrings;
 #  Answers
 #
 #
-ANS(Real($min)->cmp(
-   checker => sub{
-   my ($correct, $student, $ansHash) = @_;
-   my ($sx) = $student->value;
-   if (($sx <= $max) && ($sx >= $min)){
-   return 1;
-   }
-   else {return 0;}
- }));
+$showPartialCorrectAnswers = 0;
+
+ANS( radio_cmp( $mc->correct_ans() ) );
 
 ENDDOCUMENT();        

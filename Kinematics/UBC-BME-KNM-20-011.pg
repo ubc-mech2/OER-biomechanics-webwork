@@ -1,0 +1,135 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "PGchoicemacros.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+Context("Numeric");
+$vfx = random(3, 5, 1);
+$theta = random(60, 75, 1);
+$h_cm = random(140, 160, 1);
+$omega1 = random(1, 2, 0.1);
+$alpha1 = random(0.3, 0.7, 0.01);
+$afx = random(0.2, 0.4, 0.01);
+$afy = random(0.6, 0.8, 0.01);
+
+#Part A
+$mc1 = new_checkbox_multiple_choice();
+$mc1 -> qa (
+"a) What is the velocity of the head at time \(t\)? Select all that apply.", 
+"\(\vec{v_H} = \vec{v_F} + \vec{\omega} \times \vec{r_{H/F}}\) $BR",
+"\(\vec{v_H} = (v_{Fx} - \omega_1 h sin\theta) \hat{i} - \omega_1 h cos\theta \)$BR",
+);
+$mc1 -> makeLast(
+"\(\vec{v_H} = \vec{v_F} + \vec{\omega} \times \vec{r_{H/F}}\) $BR",
+"\(\vec{v_H} = \vec{v_F} - \vec{\omega} \times \vec{r_{H/F}}\) $BR",
+"\(\vec{v_H} = (v_{Fx} + \omega_1 h sin\theta) \hat{i} + \omega_1 h cos\theta \)$BR",
+"\(\vec{v_H} = (v_{Fx} - \omega_1 h sin\theta) \hat{i} - \omega_1 h cos\theta \)$BR",
+);
+
+#Part B
+$vfx_ms = $vfx/3.6;
+$h =  $h_cm/100;
+$theta_rad = $theta*pi/180;
+$vHi = ($vfx_ms - ($omega1*$h*sin($theta_rad)));
+$vHj = (-$omega1*$h*cos($theta_rad));
+$vH = sqrt(abs($vHi**2) + abs($vHj**2));
+
+#Part C
+$mc3 = new_checkbox_multiple_choice();
+$mc3 -> qa (
+"c) What is the acceleration of the head at time \(t\)? Select all that apply.", 
+"\(\vec{a_H} = \vec{a_F} + \vec{\alpha} \times \vec{r_{H/F}} - \omega_1^2 \vec{r_{H/F}} \) $BR",
+"\(\vec{a_H} = (a_{Fx} - \alpha_1 h sin\theta + \omega_1^2 h cos\theta) \hat{i} + (a_{Fy} - \alpha_1 h cos\theta - \omega_1^2 h sin\theta) \hat{j} \)$BR",
+);
+$mc3 -> makeLast(
+"\(\vec{a_H} = \vec{a_F} - \vec{\alpha} \times \vec{r_{H/F}} + \omega_1^2 \vec{r_{H/F}} \) $BR",
+"\(\vec{a_H} = \vec{a_F} + \vec{\alpha} \times \vec{r_{H/F}} - \omega_1^2 \vec{r_{H/F}} \) $BR",
+"\(\vec{a_H} = (a_{Fx} - \alpha_1 h sin\theta + \omega_1^2 h cos\theta) \hat{i} + (a_{Fy} - \alpha_1 h cos\theta - \omega_1^2 h sin\theta) \hat{j} \)$BR",
+"\(\vec{a_H} = (a_{Fx} + \alpha_1 h sin\theta - \omega_1^2 h cos\theta) \hat{i} + (a_{Fy} + \alpha_1 h cos\theta + \omega_1^2 h sin\theta) \hat{j} \)$BR",
+);
+
+#Part D
+$aHi = $afx - ($alpha1*$h*sin($theta_rad)) + (($omega1**2)*$h*cos($theta_rad));
+$aHj = $afy - ($alpha1*$h*cos($theta_rad)) - (($omega1**2)*$h*sin($theta_rad));
+$aH = sqrt($aHi**2 + $aHj**2);
+
+##############################################################
+#
+#  Text
+#
+#
+
+Context()->texStrings;
+BEGIN_TEXT
+A person standing on a beach is knocked down by an incoming wave. At some time, \(t\), during the fall, the velocity of the wave (and the foot) is \(\vec{v_F} = v_{Fx} \hat{i}\), and the acceleration of the foot is \(\vec{a_F} = a_{Fx} \hat{i}\ + a_{Fy} \hat{j}\). 
+$PAR
+Assume that the entire body acts as a rigid body, and the body makes an angle \(\theta\)  with the ground at time \(t\) as shown in the figure. The angular velocity of the body at time \(t\) is \(\vec{\omega} = \omega_1 \hat{k}\), and angular acceleration of the body is \(\vec{\alpha} = \alpha_1 \hat{k}\). The distance between the foot and the head of the person is \(h\). 
+$PAR
+\{image("UBC-BME-KNM-20-011.png", width=>500, height=>341)\}
+$PAR
+\{ $mc1 -> print_q() \}
+$BR
+\{ $mc1 -> print_a() \}
+$PAR
+b) What is the magnitude of the head's velocity at time \(t\), if \(v_{Fx} = $vfx km/hr, \theta = $theta^\circ, h = $h_cm cm\), and \(\omega_1 = $omega1 rad/s\)? 
+$PAR
+\{ans_rule(8)\} \(m/s\)
+$PAR
+\{ $mc3 -> print_q() \}
+$BR
+\{ $mc3 -> print_a() \}
+$PAR
+d) What is the magnitude of the head's acceleration at time \(t\), if \(\alpha_1 = $alpha1 rad/s^2, a_{Fx} = $afx m/s^2\), and \(a_{Fy} = $afy m/s^2\)? 
+$PAR
+\{ans_rule(8)\} \(m/s^2\)
+END_TEXT
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+install_problem_grader(~~&std_problem_grader);
+
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc1->correct_ans() ) );
+$showPartialCorrectAnswers = 1;
+ANS( num_cmp($vH, reltol=>1));
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc3->correct_ans() ) );
+$showPartialCorrectAnswers = 1;
+ANS( num_cmp($aH));
+
+ENDDOCUMENT();        

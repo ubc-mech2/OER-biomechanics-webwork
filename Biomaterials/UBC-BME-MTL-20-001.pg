@@ -1,0 +1,127 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl", 
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Scaffold::Begin();
+Context("Numeric");
+Context()->texStrings;
+$age = 78;
+$m = 68;
+$d_cm = 5;
+$d = $d_cm/100;
+$dOut_mm = 35;
+$dOut = $dOut_mm/1000;
+$thickness_mm = 5;
+$thickness = $thickness_mm/1000;
+
+BEGIN_TEXT
+You are in charge of a fracture screening program at a local health care facility and have focussed on femoral diaphyseal fractures. As part of your program, you run patients through gait analysis to determine their hip joint reaction forces. With this information, X-rays of their femurs, and your biomechanical knowledge, you are able to calculate their risk for sustaining a fracture of their femoral diaphysis.
+$PAR
+Please use a strength of materials approach and assume that: 
+\[Fracture Risk = \frac{\sigma_{peak}}{\sigma_{ult}}\]
+You may assume a circular cross-section and material properties as shown below. $BR
+\{image("UBC-BME-MTL-20-001.png", width=>400, height=>244)\}
+END_TEXT
+
+Section::Begin();
+$BWmultiplier = 3.2;
+$Fj = $m*9.81*$BWmultiplier; 
+$dInner = $dOut - (2*$thickness);
+$A = (pi/4)*($dOut**2) - ((pi/4)*($dInner**2));
+$I = (pi/4)*(($dOut/2)**4 - ($dInner/2)**4);
+$sigmaF = $Fj/$A; 
+
+$tensileStressCrit = 133000000; 
+$compressiveStressCrit = 193000000;
+
+$My = $Fj*$d*($dOut/2); 
+$tensileStress = -$sigmaF + ($My/$I); 
+$compressiveStress = -$sigmaF - ($My/$I); 
+
+$FRT = abs($tensileStress/$tensileStressCrit);
+$FRC = abs($compressiveStress/$compressiveStressCrit); 
+
+BEGIN_TEXT
+Calculate the fracture risk for a $age year old man ($m kg) with a cranial-caudal joint force of 3.2 times body weight. The load is the only hip joint reaction force and it acts $d_cm cm from the mid-axis of the femur. An A-P X-ray shows that the outer diameter of his femur is $dOut_mm mm with a cortical thickness of $thickness_mm mm.
+$PAR
+What is his risk for suffering a fracture? $BR
+\({F.R.}_T\) = \{ans_rule(5)\} $BR
+\({F.R.}_C\) = \{ans_rule(5)\} $BR
+END_TEXT
+ANS(num_cmp($FRT));
+ANS(num_cmp($FRC));
+Section::End(); 
+
+Section::Begin();
+$loss_mm = 1;
+$loss = $loss_mm/1000;
+$dOut2 = $dOut - (2*$loss); 
+
+$A2 = (pi/4)*($dOut2**2) - ((pi/4)*($dInner**2));
+$I2 = (pi/4)*(($dOut2/2)**4 - ($dInner/2)**4);
+$sigmaF2 = $Fj/$A2; 
+
+$My2 = $Fj*$d*($dOut2/2); 
+$tensileStress2 = -$sigmaF2 + ($My2/$I2); 
+$compressiveStress2 = -$sigmaF2 - ($My2/$I2); 
+
+$FRT2 = abs($tensileStress2/$tensileStressCrit);
+$FRC2 = abs($compressiveStress2/$compressiveStressCrit); 
+
+BEGIN_TEXT
+One year later, the same man returns to your centre and he has lost 1 mm uniformly from the periosteal cortex. What is his new fracture risk? $BR
+\({F.R.}_T\) = \{ans_rule(5)\} $BR
+\({F.R.}_C\) = \{ans_rule(5)\} $BR
+END_TEXT
+ANS(num_cmp($FRT2));
+ANS(num_cmp($FRC2));
+Section::End();
+
+Section::Begin();
+$d3_cm = 4;
+$d3 = $d3_cm/100;
+$BWmultiplier3 = 2.75; 
+$shearStressCrit = 68000000;
+$Ft = $BWmultiplier3*$m*9.81;
+$shearStress3 = ($Ft*$d3*($dOut2/2))/((pi/32)*($dOut2**4 - $dInner**4)); 
+$FRT3 = $shearStress3/$shearStressCrit; 
+
+BEGIN_TEXT
+Another year later, you repeat the gait analysis on this fellow. You find that there are two distinct phases in the gait cycle which are “critical”. One critical phase is when his hip joint reaction forces are those from Part 2. The second critical phase is when the cranial-caudal force is zero but the anterior-posterior force is $BWmultuplier3 times body weight, at $d3_cm cm from the femoral axis. You realize that this is potentially hazardous in torsion and proceed to compare this fracture risk with that from Part 2. 
+$BR
+\({F.R.}\) = \{ans_rule(5)\} $BR
+END_TEXT
+ANS(num_cmp($FRT3));
+Section::End();
+
+Scaffold::End();
+
+
+ENDDOCUMENT();        

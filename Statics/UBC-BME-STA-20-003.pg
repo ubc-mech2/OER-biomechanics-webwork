@@ -29,17 +29,10 @@ loadMacros(
    #"PGcourse.pl",      # Customization file for the course
 );
 
-# Print problem number and point value (weight) for the problem
 TEXT(beginproblem());
-
-# Show which answers are correct and which ones are incorrect
 $showPartialCorrectAnswers = 1;
 
 ##############################################################
-#
-#  Setup
-#
-#
 $mHelmet = random(1, 3, 0.1);
 $mNVG = random(0.8, 2, 0.1);
 $d_cm = 20;
@@ -70,13 +63,6 @@ $a_max = 0.04;
 $a_min = 0.01;
 $b_max = 0.04;
 $b_min = 0.01;
-
-
-##############################################################
-#
-#  Text
-#
-#
 
 Context()->texStrings;
 BEGIN_TEXT
@@ -116,12 +102,10 @@ Section::End();
 
 Section::Begin();
 $W_head = $stuM*9.81;
-
 $Fm1 = ($W_head*$stuA)/(sin($theta)*$stuB);
 $Fjx1 = $Fm1*cos($theta);
 $Fjy1 = $W_head + ($Fm1*sin($theta));
 $Fj1 = sqrt($Fjx1**2 + $Fjy1**2);
-
 
 BEGIN_TEXT
 Solve for occipital condyles joint reaction forces and neck extensor muscle forces in the $BBOLD no headset $EBOLD condition: 
@@ -143,14 +127,12 @@ $Fjx2 = $Fm2*cos($theta);
 $Fjy2 = $W_head + $W_NVG + ($Fm2*sin($theta));
 $Fj2 = sqrt($Fjx2**2 + $Fjy2**2);
 
-
 BEGIN_TEXT
 Solve for occipital condyles joint reaction forces and neck extensor muscle forces in the $BBOLD VR headset $EBOLD condition: 
 $PAR
 \(F_J\): \{ans_rule(10)\} N $BR
 \(F_M\): \{ans_rule(10)\} N $BR
 END_TEXT
-
 ANS($Fj2 -> cmp());
 ANS($Fm2 -> cmp());
 Section::End();
@@ -166,7 +148,6 @@ $popup1 = PopUp(["?", "increase", "decrease"], "increase");
 $popup2 = PopUp(["?", "occipital condyles muscle force","joint reaction force" ], "joint reaction force");
 $popup3 = PopUp(["?", "increase", "decrease"], "decrease");
 $popup4 = PopUp(["?", "occipital condyles muscle force","joint reaction force" ], "occipital condyles muscle force");
-
 
 BEGIN_TEXT
 Some surgeries last multiple hours, which can put strain on the surgeon's neck, especially when done repeatitively for long durations. A counterweight on the back of the head can help relieve some of this strain. Given the task of designing a counterweight for surgery VR headsets, you must consider various trade-offs in order to set your design requirements and criteria. 
@@ -185,14 +166,5 @@ ANS( $popup4->cmp() );
 Section::End();
 
 Scaffold::End();
-##############################################################
-#
-#  Answers
-#
-#
-
-# relative tolerance --3.1412 is incorrect but 3.1413 is correct
-# default tolerance is .01 or one percent.
-
 
 ENDDOCUMENT();        

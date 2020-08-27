@@ -1,0 +1,103 @@
+##DESCRIPTION
+## 
+##ENDDESCRIPTION
+
+## DBsubject(Dynamics)
+## DBchapter(Planar kinetics of rigid bodies)
+## DBsection(Equations of motion)
+## Date()
+## Author()
+## Level()
+## KEYWORDS('')
+## Institution('University of British Columbia')
+## TitleText('TBD')
+## EditionText('TBD')
+## AuthorText('TBD')
+## Section('TBD')
+## Problem('TBD')
+##############################################################
+
+DOCUMENT();
+
+
+loadMacros(   
+	"PGstandard.pl",     # Standard macros for PG language
+	"MathObjects.pl",
+	"PGML.pl",
+	"parserPopUp.pl",
+	"parserMultiAnswer.pl",
+	"parserRadioButtons.pl",
+    "PGchoicemacros.pl",
+	"parserFunction.pl",
+    "scaffold.pl",
+	"PGauxiliaryFunctions.pl",
+	#"source.pl",        # allows code to be displayed on certain sites.
+	#"PGcourse.pl", 	 # Customization file for the course
+   	);
+
+Context("Numeric");
+
+#given
+$m = random(60,80,1);
+$h = random(1.5,2,.01);
+$g = random(8,12,.1);
+
+$lhat = (.87 - .53)*$h;
+$mhat = .678*$m;
+$d = .626*$lhat;
+$d = sprintf("%0.3f",$d);
+$k = .496*$lhat;
+$k = sprintf("%0.3f",$k);
+
+#computation 
+$I = $mhat*$k**2;
+$alpha = $g*9.81*$mhat*$com/($I + $mhat*$com**2);
+
+$mc = new_multiple_choice();
+$mc->qa(
+"If these muscles reacted fast enough to the sudden deceleration, would the value for angular acceleration solved for in Part 1 increase or decrease?", 
+"Decrease"
+);
+$mc->makeLast("Increase",
+"Decrease",
+);
+
+#set tolerance
+Context()->flags->set(
+tolerance=>.01);
+
+##############################################################
+#
+#  Text 
+#
+Scaffold::Begin();
+
+BEGIN_TEXT
+At the end of a roller coaster ride, the car suddenly decelerates to an eventual stop. This causes riders that are restrained by the lap belt to jerk forward, with their head, arms, and trunk (HAT) rotating about the hip. A man riding the roller coaster has a height and weight of $h m and $m kg, respectively. You can assume that the roller coaster car experiences a sudden deceleration of $g g’s, the HAT weight is 0.678BW, d = $d m, and the radius of gyration at the COM is $k m. $BR
+\{image("UBC-BME-KNT-20-013.png", width=>350, height=>416)\}
+END_TEXT
+
+Section::Begin("Part 1: Angular Acceleration");
+BEGIN_TEXT
+What is the initial angular acceleration of the man’s upper body? 
+$PAR
+\(\alpha\) = \{ans_rule(10)\} rad/s
+END_TEXT
+ANS(num_cmp($alpha));
+Section::End();
+
+Section::Begin("Part 2: Limitations");
+BEGIN_TEXT
+For Part 1, muscle forces were not considered in the analysis of angular acceleration. Think about what muscles would be involved in keeping the HAT upright during this motion. 
+
+\{ $mc->print_q() \}
+$BR
+\{ $mc->print_a() \}
+END_TEXT
+$showPartialCorrectAnswers = 0;
+ANS( radio_cmp( $mc->correct_ans() ) );
+
+Section::End();
+
+Scaffold::End();
+ENDDOCUMENT();

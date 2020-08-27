@@ -1,0 +1,118 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "parserPopUp.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Scaffold::Begin();
+$Fgy = random(400, 700, 50);
+$Fgx = random(200, 400, 50);
+
+BEGIN_TEXT
+The following data is measured from a 2D force gauge implanted in the hockey skate of a local athlete. The ground reaction forces are \(F_{gy}\) = $Fgy N and \(F_{gx}\) = $Fgx N. Assume that the distance between the ice and force gauge is negligible: $BR
+\{image("UBC-BME-KNT-20-014-1.png", width=>300, height=>362)\}
+$PAR
+A diagram of the situation is also included below: $BR
+\{image("UBC-BME-KNT-20-014-2.png", width=>357, height=> 407)\}
+END_TEXT 
+
+Section::Begin("Analysis of the Ankle");
+$h1 = 0.1;
+$v1 = 0.1;
+$h2 = 0.01;
+$v2 = 0.18;
+$h3 = 0.11;
+$v3 = 0.15;
+$m = 2.5;
+$I = 0.03;
+$ah = 0.4;
+$av = 1.5;
+$alpha = 1.5;
+
+$Ma = abs(-$Fgx*$v1 - $Fgy*$h1);
+$Fay = abs($Fgy);
+$Fax = abs(-$Fgx); 
+$popupMa = PopUp(["?", "clockwise", "counter clockwise"], "clockwise");
+$popupFay = PopUp(["?", "~~x{2191}", "~~x{2193}"], "~~x{2193}");
+$popupFax = PopUp(["?", "~~x{2190}", "~~x{2192}"], "~~x{2190}");
+
+BEGIN_TEXT
+Calculate the vertical, horizontal and moment reactions at the ankle joint. Select the correct direction for each.
+
+$PAR
+\(M_a\) = \{ans_rule(5)\} Nm,  \{ $popupMa->menu() \}$BR
+\(F_{Ay}\) = \{ans_rule(5)\} N, \{ $popupFay->menu() \}$BR
+\(F_{Ax}\) = \{ans_rule(5)\} N, \{ $popupFax->menu() \} $BR
+END_TEXT
+
+ANS(num_cmp($Ma));
+ANS( $popupMa->cmp() );
+ANS(num_cmp($Fay));
+ANS( $popupFay->cmp() );
+ANS(num_cmp($Fax));
+ANS( $popupFax->cmp() );
+Section::End();
+
+Section::Begin("Analysis of the Knee");
+
+$Fky = abs($Fay - $m*9.81 - $m*$av);
+$Fkx = abs($Fax - $m*$ah); 
+$Mk = $I*$alpha - $Fkx*$v3 + $Fky*$h3 - $Fax*$v2 + $Fay*$h2 +$Ma;
+$popupMk = PopUp(["?", "clockwise", "counter clockwise"], "clockwise");
+$popupFky = PopUp(["?", "~~x{2191}", "~~x{2193}"], "~~x{2193}");
+$popupFkx = PopUp(["?", "~~x{2190}", "~~x{2192}"], "~~x{2190}");
+
+BEGIN_TEXT
+Calculate the vertical, horizontal and moment reactions at the ankle joint. Select the correct direction for each.
+
+$PAR
+\(M_k\) = \{ans_rule(5)\} Nm,  \{ $popupMk->menu() \}$BR
+\(F_{Ky}\) = \{ans_rule(5)\} N, \{ $popupFky->menu() \}$BR
+\(F_{Kx}\) = \{ans_rule(5)\} N, \{ $popupFkx->menu() \} $BR
+END_TEXT
+
+ANS(num_cmp($Mk));
+ANS( $popupMk->cmp() );
+ANS(num_cmp($Fky));
+ANS( $popupFky->cmp() );
+ANS(num_cmp($Fkx));
+ANS( $popupFkx->cmp() );
+Section::End();
+
+Scaffold::End();
+ENDDOCUMENT();        

@@ -1,0 +1,89 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+##KEYWORDS('')
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('Will Engle')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "PG.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "scaffold.pl", 
+   "unionTables.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+
+Context("Numeric");
+$mc = new_multiple_choice();
+$mc->qa(
+"a) Where does the HIC equation and limit come from?", 
+"Human volunteer, cadaver, and animal tests",
+);
+$mc->extra("ATD Tests", 
+"Hospital records",
+);
+
+$mc2 = new_multiple_choice();
+$mc2->qa(
+"b) How is HIC used by regulatory bodies?", 
+"To set safety standards for vehicles",
+);
+$mc2->extra("To gauge injury severity",
+"To test the effectiveness of ATD's", 
+);
+
+$g = 9.81;
+$HIC15 = (1/0.015 * (30*0.005 + 30*0.005 + 25*0.005))**2.5 * 0.015;
+$HIC36 = (1/0.036 * 0.006 * (50+60+70+40+60+20))**2.5 * 0.036;
+
+BEGIN_TEXT
+Head Injury Criterion (HIC) is calculated as follows: $BR
+\[ HIC = \left[ \frac{1}{t_2 - t_1} \int_{t_1}^{t_2} a_r dt \right]^{2.5} (t_2 - t_1)\]
+where \(a_r\) is resultant head acceleration in g's, and \(t_1\) and \(t_2\) are in seconds.
+$PAR
+\{ $mc->print_q() \}
+$BR
+\{ $mc->print_a() \}
+$PAR
+\{ $mc2->print_q() \}
+$BR
+\{ $mc2->print_a() \}
+$PAR
+c) Calculate a HIC15 for the acceleration plot below: $BR
+\{image("UBC-BME-INJ-20-024-1.png", width => 500, height=> 383)\} $PAR
+HIC15 = \{ans_rule(10)\} 
+$PAR
+d) Calculate a HIC36 for the acceleration plot below: $BR
+\{image("UBC-BME-INJ-20-024-2.png", width => 500, height=> 373)\} $PAR
+HIC36 = \{ans_rule(10)\}
+END_TEXT
+$showPartialCorrectAnswers = 0;
+ANS( radio_cmp( $mc->correct_ans() ) );
+ANS( radio_cmp( $mc->correct_ans() ) );
+ANS(num_cmp($HIC15, format => '%0.1f', tol => .01));
+ANS(num_cmp($HIC36, format => '%0.1f', tol => .01));
+ENDDOCUMENT();        

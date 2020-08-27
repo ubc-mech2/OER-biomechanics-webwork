@@ -107,7 +107,7 @@ $ME = -($mW*9.81*$dL) - (9.81*($mW + $mH)*($LL + $dh)) + ($IE*$alpha);
 BEGIN_TEXT
 Now, find the mass moment of inertia and reaction moment at the elbow. $PAR
 \(I_{E}\) = \{ans_rule(10)\} \(kg \bullet m^2\) $BR
-\(M_{S}\) = \{ans_rule(10)\} Nm $BR
+\(M_{E}\) = \{ans_rule(10)\} Nm $BR
 END_TEXT
 ANS(num_cmp($IE));
 ANS(num_cmp($ME));

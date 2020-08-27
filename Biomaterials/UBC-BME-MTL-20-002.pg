@@ -1,0 +1,57 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+
+$dOut_mm = random(14, 16, 1);
+$dOut = $dOut_mm/1000;
+$thickness_mm = random(2, 4, 1);
+$thickness = $thickness_mm/1000;
+$dIn = $dOut - (2*$thickness);
+
+$transverseTensionCrit = 51e6;
+$transverseECrit = 11.5e9; 
+$strainCrit = $transverseTensionCrit/$transverseECrit;
+
+$c = (pi/2)*($dOut+$dIn);
+$dD = $strainCrit*$c/pi;
+$dc = pi*$dD;
+$avgStrain = $dc/$c;
+$dRod_mm = ($dIn + $dD)*1000; 
+Context()->texStrings;
+BEGIN_TEXT
+An intramedullary rod is a cylindrical device which is placed down the diaphysis of a fractured long bone to provide stabilization. 
+$PAR
+For a bone with outside diameter of $dOut_mm mm and cortical wall thickness of $thickness_mm mm, calculate the largest rod diameter which can be placed into this bone without causing a fracture. Assume that the bone cross-section is circular, that its material properties are as shown in the table below, and that the rod does not deform. $BR
+\{image("UBC-BME-MTL-20-001.png", width=>400, height=>244)\}
+$PAR
+Rod Diameter = \{ans_rule(5)\} mm
+END_TEXT
+ANS(num_cmp($dRod_mm));
+ENDDOCUMENT();        

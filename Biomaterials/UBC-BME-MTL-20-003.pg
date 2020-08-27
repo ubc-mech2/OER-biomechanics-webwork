@@ -1,0 +1,51 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+
+$stress = 0.3; 
+$agMod = 0.80;
+$permeability = 6.2e-15;
+$thickness = 2;
+
+Context()->texStrings;
+BEGIN_TEXT
+Use the biphasic equation shown below to determine the creep curves for three confined compression tests with an applied compressive stress of $stress MPa.
+$PAR
+\[\frac{u}{h} = \frac{F_o}{H_a} \left[ 1 - 2 \sum_{n=0}^{\infty} \frac{1}{(n+\frac{1}{2})^2 \pi^2} exp \left(-\left(n+\frac{1}{2}\right)^2 \pi^2 \frac{H_a k t}{h^2}\right) \right]\]
+$PAR
+Assume the following material properties: $BR
+\(\quad \circ\) Aggregate Modulus: $agMod MPa $BR
+\(\quad \circ\) Permeability: $permeability \(m^4/{Ns}\) $BR
+\(\quad \circ\) Thickness: $thickness mm 
+$PAR
+
+END_TEXT
+
+ENDDOCUMENT();        

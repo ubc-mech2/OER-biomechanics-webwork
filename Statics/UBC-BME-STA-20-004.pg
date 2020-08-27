@@ -27,17 +27,10 @@ loadMacros(
    #"PGcourse.pl",      # Customization file for the course
 );
 
-# Print problem number and point value (weight) for the problem
 TEXT(beginproblem());
-
-# Show which answers are correct and which ones are incorrect
 $showPartialCorrectAnswers = 1;
 
 ##############################################################
-#
-#  Setup
-#
-#
 Context("Numeric");
 Scaffold::Begin();
 BEGIN_TEXT
@@ -51,6 +44,7 @@ $weight1 = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the
 $toprail = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the Seat", "Ground Reaction Force"],"Force of the Top Rail",);
 $seat = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the Seat", "Ground Reaction Force"],"Force of the Seat",);
 $ground = PopUp(["?","Weight of the Body","Force of the Top Rail","Force of the Seat", "Ground Reaction Force"],"Ground Reaction Force",);
+
 BEGIN_TEXT
 Label the forces in the free body diagram of the whole body of the person. $BR
 \{ image( "UBC-BME-STA-20-004-2.png", width=>250, height=>250 ) \}
@@ -60,14 +54,15 @@ B: \{ $toprail->menu() \} $BR
 C: \{ $seat->menu() \} $BR
 D: \{ $ground->menu() \} 
 END_TEXT
+
 install_problem_grader(~~&std_problem_grader);
 $showPartialCorrectAnswers = 0;
 ANS( $weight1->cmp() );
 ANS( $toprail->cmp() );
 ANS( $seat->cmp() );
 ANS( $ground->cmp() );
-
 Section::End();
+
 Section::Begin();
 $weight2 = PopUp(["?","Weight of the Thigh","Quadriceps Force","Hip Reaction Force", "Gluteus Maximus Force","Knee Reaction Force"],"Weight of the Thigh",);
 $hip = PopUp(["?","Weight of the Thigh","Quadriceps Force","Hip Reaction Force", "Gluteus Maximus Force","Knee Reaction Force"],"Hip Reaction Force",);
@@ -97,7 +92,6 @@ $weight3 = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reacti
 $grf = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reaction Force", "Achilles Tendon Force"],"Ground Reaction Force",);
 $ankle = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reaction Force", "Achilles Tendon Force"],"Ankle Reaction Force",);
 $AT = PopUp(["?","Weight of the Foot","Ankle Reaction Force","Ground Reaction Force", "Achilles Tendon Force"],"Achilles Tendon Force",);
-
 BEGIN_TEXT
 Label the free body diagram of the left thigh only. $PAR
 \{image("UBC-BME-STA-20-004-4.png", width=>200, height=>200)\} $PAR

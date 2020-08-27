@@ -1,0 +1,118 @@
+##DESCRIPTION
+##
+##ENDDESCRIPTION
+
+##
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "PG.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "unionTables.pl",
+   "answerHints.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+
+$vi_kmh = random(50, 70, 1);
+$dxs_cm = random(20, 40, 1);
+$dns_cm = random(3, 5, 1);
+$Favgs_kN = random(30, 40, 1);
+
+$vi = $vi_kmh/3.6;
+$dxs = $dxs_cm/100;
+$dns = $dns_cm/100;
+$Favgs = $Favgs_kN*1000;
+
+$m = (2*$Favgs*$dxs)/($vi**2);
+$Favg_ns = abs((-$m*$vi**2)/(2*$dns));
+$Favg_ns_kN = $Favg_ns/1000;
+$dts = ($m*$vi)/$Favgs;
+$dts_ms = $dts*1000;
+$dtns = ($m*$vi)/$Favg_ns;
+$dtns_ms = $dtns*1000;
+
+$decel_s = abs((-$vi/$dts)/9.81);
+$decel_ns = abs((-$vi/$dtns)/9.81);
+
+##############################################################
+#
+#  Text
+#
+#
+Context()->texStrings;
+BEGIN_TEXT
+A car moving at velocity \(v_i = $vi_kmh\) km/hr crashes into a tree and comes to a complete stop. During the crash, the stopping distance of the driver (wearing a seatbelt) is \(\Delta x_s = $dxs_cm\) cm. 
+$PAR
+\{image("UBC-BME-KNT-20-012.png", width=>800, height=>310)\}
+$PAR
+a) If the average impact force experienced by the driver is $Favgs_kN kN, what is the mass of the driver? $BR
+\(m_{driver}\) = \{ans_rule(10)\} kg 
+$PAR
+b) If the driver does not wear a seatbelt, and collides with the windshield during the crash, with a stopping distance of \(\Delta x_ns\) = $dns_cm cm, what is the magnitude of the average impact force on the driver? $BR
+\(|F_{avg, ns}|\) = \{ans_rule(10)\} kN 
+$PAR
+c) Calculate the time required to stop the driver from moving, when the seatbelt is worn: $BR
+\(\Delta t_s\) = \{ans_rule(10)\} ms
+$PAR
+d) Calculate the time required to stop the driver from moving, when the seatbelt is not worn: $BR
+\(\Delta t_{ns}\) = \{ans_rule(10)\} ms
+$PAR
+e) Calculate the average deceleration (in g’s, or relative to the acceleration due to the earth’s gravity) for the case when the driver wears a seatbelt: $BR
+Average Deceleration = \{ans_rule(10)\} g's
+$PAR
+f) Calculate the average deceleration (in g’s, or relative to the acceleration due to the earth’s gravity) for the case when the driver does not wear a seatbelt: $BR
+Average Deceleration = \{ans_rule(10)\} g's
+
+END_TEXT
+
+Context()->normalStrings;
+
+##############################################################
+#
+#  Answers
+#
+#
+$showPartialCorrectAnswers = 0;
+
+ANS(num_cmp($m));
+ANS(num_cmp($Favg_ns_kN));
+ANS(num_cmp($dts_ms));
+ANS(num_cmp($dtns_ms, reltol => 0.7));
+ANS(num_cmp($decel_s, reltol => 0.7));
+ANS(num_cmp($decel_ns, reltol => 0.7));
+
+# default tolerance is .01 or one percent.
+
+ENDDOCUMENT();        

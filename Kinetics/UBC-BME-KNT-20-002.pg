@@ -90,26 +90,28 @@ $FpeakkN = $Fpeak/1000;
 
 Context()->texStrings;
 BEGIN_TEXT
-You are investigating an injury which resulted when a playground swing broke. The swing was attached to the playset by two ropes, each of which was supposed to bbe able to withstand a force of 695 N. 
+You are investigating an injury which resulted when a playground swing broke. The swing was attached to the playset by two ropes, each of which was supposed to be able to withstand a force of 695 N. 
 $BR
 \{ image( "UBC-BME-KNT-20-002-1.png", width=>350, height=>200)\} $BR
-You are given the folling information about the case: The person injured had a mass of $m kg, the swing had a mass of $mSwing kg, the length of the ropes from the pivot point to the swing set was $L m, and as the person was swinging, the maximum angle was +/- $thetaMax_deg \(\circ\) from the vertical. You can assume the person was not affecting the swing with their motion at the instant it potentially broke (no leg kicking). 
+You are given the following information about the case: The person injured had a mass of $m kg, the swing had a mass of $mSwing kg, the length of the ropes from the pivot point to the swing set was $L m, and as the person was swinging, the maximum angle was +/- $thetaMax_deg \(\circ\) from the vertical. You can assume the person was not affecting the swing with their motion at the instant it potentially broke (no leg kicking). 
 $PAR
 \{$mc->print_q()\} 
 \{$mc->print_a()\}
 $PAR
 A) \{$mc1->print_q()\} 
-\{$mc1->print_a()\} $BR
-What is the tension in each rope at this point? \{ans_rule(10)\} N
+\{$mc1->print_a()\} 
 $PAR
-B) \{$mc2->print_q()\}
+B) What is the tension in each rope at this point (identified in Part A)? $BR
+\{ans_rule(10)\} N
+$PAR
+C) \{$mc2->print_q()\}
 \{$mc2->print_a()\} 
 $PAR
-C) You want to inspect the ground for impact. If the swing was $h m off the ground (in the lowest point of the swing), where would you expect to find the impact location (what is the horizontal displacement from the midline of swing to where they land)? $BR
+D) You want to inspect the ground for impact. If the swing was $h m off the ground (in the lowest point of the swing), where would you expect to find the impact location (what is the horizontal displacement from the midline of swing to where they land)? $BR
 \(\Delta x\) = \{ans_rule(10)\} m $PAR
-D) Based on your analysis, which part of the body would they likely have landed on? $BR \{ $popup->menu() \}
+E) Based on your analysis, which part of the body would they likely have landed on? $BR \{ $popup->menu() \}
 $PAR
-E) You notice there is a $indent_cm cm indent into the ground (the ground is frozen). Assuming that there was likely $indent_cm cm of tissue deflection during the impact, estimate the peak force on the person. You can also assume the loading was triangular (i.e. a graph of Loading vs. Displacement would look like a triangle). You can assume the indent in the ground is in the direction of the resultant velocity \(v_R\) at ground impact. $BR 
+F) You notice there is a $indent_cm cm indent into the ground (the ground is frozen). Assuming that there was likely $indent_cm cm of tissue deflection during the impact, estimate the peak force on the person. You can also assume the loading was triangular (i.e. a graph of Loading vs. Displacement would look like a triangle). You can assume the indent in the ground is in the direction of the resultant velocity \(v_R\) at ground impact. $BR 
 \{ image( "UBC-BME-KNT-20-002-2.png", width=>400, height=>150,  
 tex_size=>700)\} $BR
 \(Peak\ Force\) = \{ans_rule(10)\} kN $PAR

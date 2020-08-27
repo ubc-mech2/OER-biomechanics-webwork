@@ -1,0 +1,92 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+#
+#  Setup
+#
+#
+Context("Numeric");
+Scaffold::Begin();
+BEGIN_TEXT
+Straight leg raising is an exercise which is sometimes used to test the extensibility of the hamstrings and quadriceps and also used in certain diagnostic procedures in the spine. In this test, the patient lies on their back and raises their leg with their knee fully extended.
+$PAR
+Conduct a two-dimensional analysis of this exercise to demonstrate its potential hazards in relation to loading at the hip joint.
+END_TEXT
+
+Section::Begin();
+$e = 0.05;
+$d = 0.5;
+$theta_deg = 10;
+$theta = $theta_deg*pi/180;
+BEGIN_TEXT
+Using anthropometric data, find reasonable values for \(e\), \(d\) and \(\theta\) in the free body diagram below: $BR
+\{image("UBC-BME-STA-20-006.png", width=>1096, height=>364)\}
+$PAR
+\(e\) = \{ans_rule(5)\} m $BR
+\(d\) = \{ans_rule(5)\} m $BR
+\(\theta\) = \{ans_rule(5)\} \(^\circ\) $BR
+END_TEXT
+ANS(num_cmp($e));
+ANS(num_cmp($d));
+ANS(num_cmp($theta_deg));
+Section::End();
+
+Section::Begin();
+$mBody = 100;
+$Fm = ((1/6)*$mBody*9.81*$d)/($e);
+$Fx = $Fm*cos($theta);
+$Fy = ((1/6)*$mBody*9.81) - ($Fm*sin($theta));
+BEGIN_TEXT
+Solve the statically determinate problem for hip joint loads. You can assume that only a single hip flexor is active (\(F_m\)), the hip joint is frictionless, \(m_{body}\) = $mBody kg, and \(m_{leg}\) = \(\frac{1}{6} m_{body}\). 
+$PAR
+\(F_{Jx}\) = \{ans_rule(10)\} N $BR
+\(F_{Jy}\) = \{ans_rule(10)\} N $BR
+END_TEXT
+ANS(num_cmp($Fx, tolerance=>0.1));
+ANS(num_cmp($Fy, tolerance=>0.1));
+Section::End();
+
+Section::Begin();
+$Fres = sqrt($Fx**2 + $Fy**2);
+$pBW = ($Fres/($mBody*9.81))*100;
+BEGIN_TEXT
+Give the magnitude of the resultant joint load as a percentage of B.W. $BR
+%BW = \{ans_rule(10)\} N $BR
+END_TEXT
+ANS(num_cmp($pBW));
+Section::End();
+
+Scaffold::End();
+ENDDOCUMENT();        

@@ -1,0 +1,140 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "scaffold.pl",
+   "parserPopUp.pl",
+   "PGchoicemacros.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+
+# Print problem number and point value (weight) for the problem
+TEXT(beginproblem());
+
+# Show which answers are correct and which ones are incorrect
+$showPartialCorrectAnswers = 1;
+
+##############################################################
+Context("Numeric");
+$m = 120;
+Scaffold::Begin();
+BEGIN_TEXT
+Conduct a two-dimensional, statically determinate analysis of the hip joint during one legged stance in a $m kg individual (remember that each leg is 1/6 of total body mass; effective moment arm of the body during one legged stance of 17 cm).
+$PAR
+END_TEXT
+
+Section::Begin("Assumptions");
+$mc1 = new_checkbox_multiple_choice();
+$mc1 -> qa (
+"What are the assumptions we need to make to conduct this analysis? Select all that apply.", 
+"This is a 2-D problem",
+"There is a single muscle that is active",                
+"The hip joint is frictionless",
+);
+$mc1 -> extra(
+"This is a 3-D problem",
+"There is a frictional force to consider within the joint",
+"There are two muscles active",
+);
+BEGIN_TEXT
+\{ $mc1 -> print_q() \}
+$BR
+\{ $mc1 -> print_a() \}
+END_TEXT
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( checkbox_cmp( $mc1->correct_ans() ) );
+Section::End();
+
+Section::Begin("Anthropometric Data");
+$e = 0.17;
+$a = 0.1;
+$theta_deg = 60;
+$theta = $theta_deg*pi/180;
+BEGIN_TEXT
+Using the anthropometric data given, find the values for \(a\) and \(\theta\) in the free body diagram below: $BR
+\{image("UBC-BME-STA-20-007-1.png", width=>1000, height=>541)\}
+$PAR
+\(a\) = \{ans_rule(5)\} m $BR
+\(\theta\) = \{ans_rule(5)\} \(^\circ\) $BR
+END_TEXT
+ANS(num_cmp($a));
+ANS(num_cmp($theta_deg));
+Section::End();
+
+Section::Begin("Statically Determinate Analysis");
+$Fm = ((5/6)*$m*9.81*$e)/($a);
+$Fx = $Fm*cos($theta);
+$Fy = ((5/6)*$m*9.81) + ($Fm*sin($theta));
+BEGIN_TEXT
+Solve the statically determinate problem for hip joint loads. 
+$PAR
+\(F_{Jx}\) = \{ans_rule(10)\} N $BR
+\(F_{Jy}\) = \{ans_rule(10)\} N $BR
+END_TEXT
+ANS(num_cmp($Fx));
+ANS(num_cmp($Fy));
+Section::End();
+
+Section::Begin("Hip Replacement");
+$gt_cm = 20;
+$h_cm = 15;
+$dAcet_cm = 4;
+
+$gt = $gt_cm/100;
+$h = $h_cm/100;
+$dAcet = $dAcet_cm/100;
+
+$temp = $gt/(($gt/tan($theta)) - $dAcet);
+$thetaPrime = atan($temp);
+
+$x = $a/cos(30*pi/180);
+$simTrianglesX = ($h/$gt)*$dAcet;
+$tempAngle = ((90*pi/180)-$thetaPrime);
+$aPrime = ($x - $simTrianglesX + $dAcet)*cos($tempAngle);
+$ePrime = $e - $dAcet;
+
+$Fm2 = ((5/6)*$m*9.81*$ePrime)/($aPrime);
+$Fx2 = $Fm2*cos($thetaPrime);
+$Fy2 = ((5/6)*$m*9.81) + ($Fm2*sin($thetaPrime));
+
+$popup = PopUp(["?", "increases", "decreases", "stays the same"], "decreases");
+
+BEGIN_TEXT
+This patient undergoes a total hip replacement and their acetabulum ends up 4 cm more medially than its position in Part 1. The FBD of this situation now looks like this: $BR
+\{image("UBC-BME-STA-20-007-2.png", width=>767, height=>560)\} $PAR
+From anthropometric data, we can determine that \(g_t\) = $gt_cm cm, and \(h\) = $h_cm cm. Repeat the analysis and comment on the changes in the muscle and joint loads. $BR
+\(F_{Jx}\) = \{ans_rule(10)\} N $BR
+\(F_{Jy}\) = \{ans_rule(10)\} N $BR
+$PAR
+WIth a total hip replacement, the muscle force \{ $popup->menu() \} and the joint load \{ $popup->menu() \}. 
+
+END_TEXT
+ANS(num_cmp($Fx2));
+ANS(num_cmp($Fy2));
+ANS( $popup->cmp() );
+ANS( $popup->cmp() );
+Section::End();
+
+Scaffold::End();
+ENDDOCUMENT();        

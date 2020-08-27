@@ -1,0 +1,62 @@
+##DESCRIPTION
+##  
+##ENDDESCRIPTION
+
+## DBsubject('')
+## DBchapter('')
+## DBsection('')
+## Date('')
+## Author('')
+## Institution('')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+########################################################################
+
+DOCUMENT();      
+
+loadMacros(
+   "PGstandard.pl",     # Standard macros for PG language
+   "MathObjects.pl",
+   "PGbasicmacros.pl",
+   "PGchoicemacros.pl",
+   "PGanswermacros.pl",
+   "unionTables.pl",
+   #"source.pl",        # allows code to be displayed on certain sites.
+   #"PGcourse.pl",      # Customization file for the course
+);
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+Context("Numeric");
+
+$ml = new_match_list();
+$ml->qa(
+"Central shaft of the bone", "Diaphysis",
+"Narrowest part of the bone", "Diaphysis",
+"Cylindrical, thin outer wall thickness", "Diaphysis",
+"Larger bending moment", "Diaphysis",
+"Larger in diameter at proximal and distal ends", "Metaphysis",
+"Cancellous bone", "Metaphysis", 
+"Larger Compressive Loads", "Metaphysis", 
+);
+
+# use pop-up-lists
+$ml->rf_print_q(~~&pop_up_list_print_q);
+# you may need to add more letters D=>"D", etc. 
+$ml->ra_pop_up_list([No_answer=>"?",A=>"A",B=>"B"]);
+$ml->choose(7);
+
+BEGIN_TEXT
+Match the characteristics to the relevant part of the long bone. $PAR
+\{ $ml->print_q() \}
+$BR
+\{ $ml->print_a() \}
+END_TEXT
+
+install_problem_grader(~~&std_problem_grader);
+$showPartialCorrectAnswers = 0;
+ANS( str_cmp( $ml->ra_correct_ans ) );
+ENDDOCUMENT();        
