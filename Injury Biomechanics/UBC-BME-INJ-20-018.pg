@@ -50,7 +50,9 @@ Scaffold::Begin();
 BEGIN_TEXT
 A bull rider's hand has become trapped in the rope after dismounting. The bull is spinning to the left at a constant angular velocity that is high enough to swing the rider off his feet. $PAR
 This is a drawing of the described situation, in the horizontal plane (from above):
-$BBOLD IMAGE HERE $EBOLD
+$PAR
+\{image("UBC-BME-INJ-20-018-1.png", width=>704, height=>272)\}
+$PAR
 
 END_TEXT
 

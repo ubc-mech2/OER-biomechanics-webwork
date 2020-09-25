@@ -57,7 +57,7 @@ $ml->qa(
 # use pop-up-lists
 $ml->rf_print_q(~~&pop_up_list_print_q);
 # you may need to add more letters D=>"D", etc. 
-$ml->ra_pop_up_list([No_answer=>"?",A=>"A",B=>"B",C=>"C", D=>"D", E=>"E"]);
+$ml->ra_pop_up_list([No_answer=>"?",A=>"A",B=>"B",C=>"C"]);
 
 $ml->choose(5);
 ##############################################################

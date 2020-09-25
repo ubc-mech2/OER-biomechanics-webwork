@@ -78,10 +78,10 @@ Point 1 = \{ans_rule(10)\} $BR
 Point 2 = \{ans_rule(10)\} $BR
 Point 3 = \{ans_rule(10)\} $BR
 Point 4 = \{ans_rule(10)\} $PAR
-Below is some data adapted from  \{ htmlLink( "https://www.sae.org/standards/content/j211/1_201403/", "SAJ-211" ) \}: $PAR
+Below is some data adapted from  \{ htmlLink( "https://www.sae.org/standards/content/j211/1_201403/", "SAE J211/1" ) \}: $PAR
 \{ image( "UBC-BME-INJ-20-013-2.png", width=>300, height=>190 ) \}
 \{ image( "UBC-BME-INJ-20-013-3.png", width=>500, height=>100 ) \} $PAR
-Does this load cell satisfy the dynamic accuracy requirement, given the information presented? $BR
+Does this load cell (CFC 600) satisfy the dynamic accuracy requirement, given the information presented? $BR
 \{ $popup->menu() \}
 END_TEXT
 Context()->normalStrings;

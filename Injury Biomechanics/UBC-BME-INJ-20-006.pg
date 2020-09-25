@@ -72,7 +72,7 @@ $ml->choose(9);
 
 Context()->texStrings;
 BEGIN_TEXT
-Categorize the following features of PMHS testing as either an advantage or disadvantage: 
+Categorize the following features of PMHS testing as either an advantage or disadvantage, as opposed to ATD testing: 
 $PAR
 \{ $ml->print_q() \}
 $BR
