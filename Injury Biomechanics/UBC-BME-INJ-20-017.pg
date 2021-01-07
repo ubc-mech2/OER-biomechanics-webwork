@@ -81,7 +81,7 @@ $BR \(\circ\) $age-year-old restrained male driver, $height cm and $driverMass k
 $BR \(\circ\) Delta-V = $dV km/hr; BEV = $BEVint km/hr
 $BR \(\circ\) Crush width = $crushWidth m;
 $BR \(\circ\) Crush profile: C1 = $C1 cm, C2 = $C2 cm (simplified from original 6-point crush profile) 
-$BR \(\circ\) Generic crush coefficients: A = $A N/cm, B = $B N/(cm^2)
+$BR \(\circ\) Generic crush coefficients: A = $A N/cm, B = $B N/(cm<sup>2</sup>)
 $PAR
 Calculate an estimate of BEV in km/hr using the generic crush coefficients. Assume perfectly frontal collision. $BR
 

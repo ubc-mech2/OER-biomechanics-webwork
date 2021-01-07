@@ -54,7 +54,7 @@ BEGIN_TEXT
 
 Estimate the impact duration \(\Delta t\) for the following crash test resultant linear acceleration data:
 $PAR
-\{image("UBC-BME-INJ-20-001-1.png", width=>704, height=>432)\}
+\{image("UBC-BME-INJ-20-001.png", width=>704, height=>432)\}
 $PAR
 \(\Delta t\) = \{ans_rule(10)\} ms
 END_TEXT

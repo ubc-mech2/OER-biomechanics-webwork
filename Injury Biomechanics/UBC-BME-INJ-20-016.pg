@@ -67,11 +67,11 @@ $popup = PopUp(["?", "Yes", "No"], "Yes");
 
 Context()->texStrings;
 BEGIN_TEXT
-When a spacecraft lands back on earth, crew members aboard can experience a large impact load. In one study, researchers created a computational model of the seat, restraint, buffer (pole in image), and occupant (using a Hybrid III ATD model), and compared results to experimental values of the same system/ATD. $PAR
+Researchers replicated a spacecraft landing using a computational model the the spacecraft, seat, and occupant (modelled as a HIII 50th percentile male ATD).$PAR
 
 The researchers calculated forces and moments at the upper neck in the model, as shown in the figure below. $BR $BITALIC Note: \(M_y\) positive = flexion; \(F_z\) negative = compression. $EITALIC  
 $PAR
-\{image("UBC-BME-INJ-20-016.png", width=>400, height=>600)\}
+\{image("UBC-BME-INJ-20-016-1.png", width=>400, height=>600)\}
 $PAR
 Estimate the maximum overall \(N_{ij}\) value using the graphs. $BR
 \(N_{ij}\) = \{ans_rule(10)\} 

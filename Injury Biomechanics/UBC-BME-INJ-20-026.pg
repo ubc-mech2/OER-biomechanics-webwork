@@ -44,7 +44,7 @@ $ISS = 5**2 + 3**2 + 3**2;
 BEGIN_TEXT
 Imagine the following scenario: a non-fatal crash involving a head-on collision between an SUV and a tree. At the time of the incident, the vehicle was solely occupied by an unbelted 23-year-old female driver.
 $PAR
-A summary of the occupant’s injuries and a list of the AIS and ISS body regions are detailed in the tables below: $BR
+A summary of the occupant's injuries and a list of the AIS and ISS body regions are detailed in the tables below: $BR
 \{image("UBC-BME-INJ-20-026-1.png", width=>480, height=>361)\} 
 \{image("UBC-BME-INJ-20-026-2.png", width=>457, height=>275)\}
 $PAR

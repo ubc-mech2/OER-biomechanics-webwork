@@ -45,22 +45,16 @@ $showPartialCorrectAnswers = 1;
 #
 #
 Context("Numeric");
-$v1_kmh = 15;
-$v1 = $v1_kmh/3.6;
-$v2_kmh = 0;
-$v2 = $v2_kmh/3.6;
-$v1prime_kmh = 5;
-$v1prime = $v1prime_kmh/3.6;
-$v2prime_kmh = 7;
-$v2prime = $v2prime_kmh/3.6;
+$v1 = 15;
+$v2 = 0;
+$v1prime = 5;
+$v2prime = 7;
 
 $pdf = 180;
-$dvRed = $v1prime_kmh - $v1_kmh;
-$dvBlue = $v2prime_kmh - $v2_kmh;
-$m1 = 850;
-$m2 = 1000;
+$dvRed = $v1prime - $v1;
+$dvBlue = $v2prime - $v2;
 
-$e = ($v1prime - $v1)*(1+($m1/$m2))/($v2-$v1) - 1;
+$e = ($v1prime - $v2prime)/($v2-$v1);
 
 $mc = new_multiple_choice();
 $mc->qa(
@@ -84,7 +78,7 @@ $mc2->extra(
 );
 
 BEGIN_TEXT
-In a simplified, 2D collision, a red car travelling $v1_kmh km/hr is crashed into the rear end of a parked blue car ($v2_kmh km/hr). The final velocity (V2') of the blue car was $v2prime_kmh km/hr, while the final velocity of the red car (V1') was $v1prime_kmh km/hr. $PAR
+In a simplified, 2D collision, a red car travelling $v1 km/hr is crashed into the rear end of a parked blue car ($v2 km/hr). The final velocity (V2') of the blue car was $v2prime km/hr, while the final velocity of the red car (V1') was $v1prime km/hr. $PAR
 \{image("UBC-BME-INJ-20-021.png", width => 491, height => 296)\}
 $PAR
 a) What is the principle direction of force (PDF) with respect to the red vehicle, in degrees? $BR
@@ -106,7 +100,7 @@ $PAR
 $BR
 \{ $mc2->print_a() \}
 $PAR
-f)  What is the coefficient of restitution for this collison, if the mass of the red car is approx. $m1 kg and the mass of the blue car is approx. $m2 kg? (answer to four decimal places) $BR
+f)  What is the coefficient of restitution for this collison? (answer to four decimal places) $BR
 \(e\) = \{ans_rule(10)\}
 END_TEXT
 

@@ -43,6 +43,9 @@ Scaffold::Begin();
 
 $RIBy = random(87, 92, 1);
 $T12y = random(78, 83, 1);
+$TTId = 0.5*($RIBy + $T12y);
+$FourDoorMax = 85; 
+
 BEGIN_TEXT
 Imagine a side-impact crash test to a $BBOLD 4-door passenger car $EBOLD. For this test, two SID dummies were buckled into the front and rear seats of the impacted side.  
 $PAR
@@ -53,11 +56,19 @@ END_TEXT
 
 Section::Begin();
 $mc = new_multiple_choice();
-$mc->qa(
-"", 
-"No, the 4-door passenger car would not have passed the FMVSS 214 Criteria");
-$mc->extra(
-"Yes, the 4-door passenger car would have passed the FMVSS 214 Criteria");
+if ($TTId > $FourDoorMax) {
+    $mc->qa(
+    "", 
+    "No, the 4-door passenger car would not have passed the FMVSS 214 Criteria");
+    $mc->extra(
+    "Yes, the 4-door passenger car would have passed the FMVSS 214 Criteria");
+} else {
+    $mc->qa(
+    "", 
+    "Yes, the 4-door passenger car would have passed the FMVSS 214 Criteria");
+    $mc->extra(
+    "No, the 4-door passenger car would not have passed the FMVSS 214 Criteria");
+}
 
 $mc2 = new_multiple_choice();
 $mc2->qa(
@@ -67,7 +78,6 @@ $mc2->extra(
 "No, the 2-door passenger car would not have passed the FMVSS 214 Criteria"
 );
 
-$TTId = 0.5*($RIBy + $T12y);
 BEGIN_TEXT
 a) Would the $BBOLD 4-door $EBOLD vehicle have passed the \{ htmlLink( "https://www.ecfr.gov/cgi-bin/text-idx?SID=b8e3b05f802d53dfc061c1544de8b7a0&mc=true&node=se49.6.571_1214&rgn=div8", "FMVSS 214 Criteria" ) \} for TTI(d)? $PAR
 \(TTI(d)\) = \{ans_rule(10)\} g $BR

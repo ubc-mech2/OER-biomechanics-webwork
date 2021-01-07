@@ -56,7 +56,7 @@ $B_cm = $B/10000;
 $friction = 0.59;
 
 $bodyRegionPopUp = PopUp(["?", "face", "head", "neck", "abdomen", "thorax", "spine", "upper extremity", "lower extremity", "skin", ], "thorax");
-$severityPopUp = PopUp(["?", "minor", "moderate", "serious", "severe", "critical"], "moderate");
+$severityPopUp = PopUp(["?", "minor", "moderate", "serious", "severe", "critical", "unsurvivable"], "moderate");
 
 $G = $A**2/(2*$B); 
 $W = $width;
@@ -81,12 +81,12 @@ $mc->makeLast("Yes, the car still would have crashed.",
 );
 
 BEGIN_TEXT
-A Ford Mondeo vears off a 50 km/hr road and crashes into a tree. An accident reconstructionist is asked to determine if the driver was speeding, and if the accident could have been prevented. She has gathered the following information from various sources: $BR
+A Ford Mondeo vears off a 50 km/hr road and undergoes a frontal crash into a tree. An accident reconstructionist is asked to determine if the driver was speeding, and if the accident could have been prevented. She has gathered the following information from various sources: $BR
 \(\quad \circ\) The car had a kerb mass of $mCar kg, and the driver weighed $mDriver kg. $BR 
 \(\quad \circ\) Total crush width: $width m $BR
 \(\quad \circ\) C1: $C1 m, C2: $C2 m, C3: $C3 m, C4: $C4 m, C5: $C5 m, C6: $C6 m $BR
 \(\quad \circ\) A: $A_cm \(N/cm\), B: $B_cm \(N/cm^2\) $BR
-\(\quad \circ\) Estimated Friction Coefficient: $friction $BR
+\(\quad \circ\) Estimated Friction Coefficient (between the car and the road): $friction $BR
 \(\quad \circ\) AIS Code: 450202.2 
 $PAR 
 The crash simulation output is shown below:  $BR

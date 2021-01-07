@@ -64,7 +64,7 @@ Context()->texStrings;
 BEGIN_TEXT
 A $m kg plate fitted with a load cell (negligible mass) is accelerated into the thorax of a cadaveric specimen via pneumatic piston as part of an experiment:
 $PAR
-\{ image( "UBC-BME-INJ-20-007.png", width=>300, height=>200) \}
+\{ image( "UBC-BME-INJ-20-007-1.png", width=>325, height=>200) \}
 $PAR
 If the impactor is accelerated at $a \(m/s^2\), what force does the load cell read prior to impact?
 $PAR \(F_{cell}\) = \{ans_rule(10)\} N

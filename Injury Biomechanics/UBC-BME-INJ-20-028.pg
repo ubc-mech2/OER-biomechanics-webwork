@@ -65,18 +65,7 @@ $mc1->makeLast("5 ms",
 "None of the above"
 );
 
-$mc2 = new_multiple_choice();
-$mc2->qa(
-"Do either of these timepoints indicate a likelihood of achieving over a 50% probability of long-term neck injury?", 
-"None of the above"
-);
-$mc2->makeLast("5 ms", 
-"10 ms", 
-"None of the above"
-);
 BEGIN_TEXT
-The neck is an incredibly important part of the human body and is instrumental for supporting the weight of the head and torso, range of motion, and protecting the spinal cord. Cervical spinal cord damage is especially of interest in the field of injury biomechanics because of the potential for severe neurological consequences such as paralysis. The following problem concerns the criteria most often used to quantify and understand neck injury
-$PAR
 Based on the information provided below, please calculate \(NIC_{max}\).
 \[NIC(t) = 0.2a_{rel}(t) + v_{rel}(t)^2\]
 $BBOLD At time 5 ms: $EBOLD $BR
@@ -89,7 +78,7 @@ $BBOLD At time 10 ms: $EBOLD $BR
 \(\quad \circ\) \(a_{head,COG}\) = $aheadCOG10 \(m/s^2\) $BR
 \(\quad \circ\) \(a_{T1}\) = $aT1_10 \(m/s^2\) $BR
 \(\quad \circ\) \(v_{head,COG}\) = $vheadCOG10 \(m/s\) $BR
-\(\quad \circ\) \(v_{T1}\) = $aT1_10 \(m/s\) $BR
+\(\quad \circ\) \(v_{T1}\) = $vT1_10 \(m/s\) $BR
 $PAR
 \(NIC_{max_{5 ms}}\) = \{ans_rule(10)\} \(m/s^2\) $BR
 \(NIC_{max_{10 ms}}\) = \{ans_rule(10)\} \(m/s^2\)
@@ -97,14 +86,9 @@ $PAR
 \{ $mc1->print_q() \}
 $BR
 \{ $mc1->print_a() \}
-$PAR
-\{ $mc2->print_q() \}
-$BR
-\{ $mc2->print_a() \}
 END_TEXT
 ANS( num_cmp($NIC5));
 ANS( num_cmp($NIC10));
 $showPartialCorrectAnswers = 0;
 ANS( radio_cmp( $mc1->correct_ans() ) );
-ANS( radio_cmp( $mc2->correct_ans() ) );
 ENDDOCUMENT();        

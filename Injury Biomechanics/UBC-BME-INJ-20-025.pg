@@ -53,7 +53,7 @@ $mc -> makeLast("Maxim #1: Maximize the time over which the restraint is applied
 
 BEGIN_TEXT
 Inflatable seatbelt system is used by many car manufacturing companies. This system was introduced in 1970's. You can see one example of this system in the figure below. The device consists of an inflatable shoulder portion and a normal lap belt. The shoulder portion is a tubular belt with an inflatable bag inside it. As soon as the inflation process starts, the bag tears the belt open. $PAR
-\{image("UBC-BME-INJ-20-025.png", width=>600, height=>400)\}
+\{image("UBC-BME-INJ-20-025-1.png", width=>600, height=>547)\}
 $PAR
 \{ $mc->print_q() \}
 $BR

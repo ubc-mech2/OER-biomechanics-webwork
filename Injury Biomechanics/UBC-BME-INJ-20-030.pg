@@ -66,7 +66,9 @@ $mc->makeLast("Not enough information to answer");
 BEGIN_TEXT
 Even though rollover crashes are rare (less than 3% of all crashes), they have high death rates; approximately one third of all occupant fatalities happen in rollover crashes. To address this issue, a vehicle's static stability factor (SSF) is used to determine the rollover resistance of a vehicle.
 $BR
-Calculate SSF for the following vehicles: a Tesla Model S and Jeep Wrangler. The Tesla has a width of $wTesla mm and height of $hTesla mm, and the Jeep has a width of $wJeep mm and height of $hJeep mm. $PAR
+Calculate SSF for the following vehicles: a Tesla Model S and Jeep Wrangler. The Tesla has a width of $wTesla mm and height of $hTesla mm, and the Jeep has a width of $wJeep mm and height of $hJeep mm. $BR
+\{image("UBC-BME-INJ-20-030.png", width=>800, height=>377 )\} $PAR
+
 $BBOLD Tesla Model S SSF $EBOLD =  \{ans_rule(10)\} $BR
 $BBOLD Jeep Wrangler SSF $EBOLD = \{ans_rule(10)\} 
 $PAR

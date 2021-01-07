@@ -62,7 +62,7 @@ Context()->texStrings;
 BEGIN_TEXT
 Calculate an ISS and MAIS for this set of injuries, taken from 
 \{ htmlLink( "https://crashviewer.nhtsa.dot.gov/CIREN/Details?Study=CIREN&CaseId=200", "NHTSA Ciren Case 200" ) \}: $PAR
-\{ image( "UBC-BME-INJ-20-011.png", width=>700, height=>320 ) \}
+\{ image( "UBC-BME-INJ-20-011-1.png", width=>700, height=>370 ) \}
 $PAR
 ISS = \{ans_rule(10)\}
 $PAR

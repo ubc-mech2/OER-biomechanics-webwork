@@ -71,7 +71,7 @@ $PAR
 $PAR
 Time window for maximum HIC: \(t =\) \{ans_rule(10)\} \(ms\) to \(t =\) \{ans_rule(10)\} \(ms\).
 $PAR
-What is the HIC value for this time window? $BR
+What is the HIC value for this time window? Only check the 15ms time window. $BR
 HIC = \{ans_rule(10)\} 
 $PAR
 \{ $mc->print_q() \}

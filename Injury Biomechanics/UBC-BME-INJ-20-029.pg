@@ -86,7 +86,12 @@ Section::Begin();
 $Fzc = 4287;
 $Myc = 67;
 
-$NTE = ($Fz30/$Fzc) + ($My30/$Myc);
+$NTE20 = ($Fz20/$Fzc) + ($My20/$Myc);
+$NTE25 = ($Fz25/$Fzc) + ($My25/$Myc);
+$NTE30 = ($Fz30/$Fzc) + ($My30/$Myc);
+$NTE35 = ($Fz35/$Fzc) + ($My35/$Myc);
+
+$NTE = max($NTE20, $NTE25, $NTE30, $NTE35);
 
 $mc = new_multiple_choice();
 $mc->qa(
@@ -112,7 +117,7 @@ DataTable(
 );
 \}
 
-\(N_{TE}\) = \{ans_rule(10)\} 
+\(N_{ij}\) = \{ans_rule(10)\} 
 $PAR
 \{ $mc->print_q() \}
 $BR

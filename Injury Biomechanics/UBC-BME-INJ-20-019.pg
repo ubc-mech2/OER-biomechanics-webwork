@@ -54,10 +54,10 @@ $E = 0.5*$mTot*($v1**2);
 
 $Fmax = random(19000, 21000, 100);
 $F_kN = $Fmax/1000;
-$dt = random(1.5, 2, 0.01);
+$dt = random(0.15, 0.2, 0.001);
 $impulse = 0.5*$Fmax*$dt;
 
-$a = ($v2 - $v1)/$dt;
+$a = abs(($v2 - $v1)/$dt);
 
 $dec_avg = -8;
 $popup = PopUp(["?", "Yes", "No"], "Yes");

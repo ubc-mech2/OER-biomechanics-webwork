@@ -60,17 +60,17 @@ $a = abs(($v2 - $v1)/$dt);
 
 $mc = new_multiple_choice();
 $mc->qa (
-      "c) Which of the following acceleration profiles would best meet the outlined requirements?",
-      image("UBC-BME-INJ-20-020-001.png", height=>368, width => 464) . $BR,
+      "d) Which of the following acceleration profiles would best meet the outlined requirements?",
+      "orange"
     );
 $mc->extra(
-      image("UBC-BME-INJ-20-020-002.png", height=>368, width => 464) . $BR,
-      image("UBC-BME-INJ-20-020-003.png", height=>368, width => 464) . $BR,
+      "grey",
+      "blue",
       );
 
 
 BEGIN_TEXT
-A vehicle buck weighing approximately $mBuck kg with 95th percentile Hybrid III ATD ($mHybrid kg) in the driver’s seat are being used for an acceleration sled test to explore the response of an interior component.
+A vehicle buck weighing approximately $mBuck kg with 95th percentile Hybrid III ATD ($mHybrid kg) in the driver's seat are being used for an acceleration sled test to explore the response of an interior component.
 $PAR
 a) The desired final velocity is $v2_kmh km/hr. Assuming the vehicle is starting from rest and it must achieve the final velocity in ~$dt_ms ms, what is the required average force applied via the acceleration ram? Assume conservation of linear momentum applies. $BR
 \(F\) = \{ans_rule(10)\} N $BR
@@ -83,14 +83,19 @@ $PAR
 b) What is the required impulse for the acceleration sled design? $BR
 \(Impulse\) = \{ans_rule(10)\} Ns $PAR
 
+c) What is the average acceleration? $BR
+\(a_{avg}\) = \{ans_rule(10)\} \(m/s^2\)
+$PAR
+
 \{ $mc->print_q() \}
-$BR
+\{image("UBC-BME-INJ-20-020.png", height=>345, width => 587)\}
 \{ $mc->print_a() \}
 
 END_TEXT
 
 ANS(num_cmp($F));
 ANS(num_cmp($Imp));
+ANS(num_cmp($a));
 ANS( radio_cmp( $mc->correct_ans() ) );
 
 ENDDOCUMENT();        

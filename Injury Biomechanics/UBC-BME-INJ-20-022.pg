@@ -57,8 +57,7 @@ $v2prime = $v1prime_kmh/3.6;
 $m1 = 1500;
 $m2 = 2000;
 
-$C1_mm = 100;
-$C1 = $C1_mm/10;
+$C1 = 10;
 $C2 = 11;
 $C3 = 9;
 $C4 = 12;
@@ -69,7 +68,7 @@ $width1_mm = 1800;
 $width1 = $width1_mm/1000;
 
 $G = $A**2/(2*$B);
-$E = ($width1/6)*((6*$G)+$A*($C1+(2*$C2)+(2*$C3)+$C4)+($B/6)*($C1**2 + (2*$C3**2) + $C4**2 + ($C1*$C2) + ($C2*$C3) + ($C3*$C4)));
+$E = ($width1/6)*((6*$G)+$A*($C1+(2*$C2)+(2*$C3)+$C4)+(($B/3)*($C1**2 + (2*$C2**2) + (2*$C3**2) + $C4**2 + ($C1*$C2) + ($C2*$C3) + ($C3*$C4))));
 $BEV = sqrt((2*$E)/$m1)*3.6;
 
 $mc = new_checkbox_multiple_choice();
@@ -86,9 +85,9 @@ $mc->makeLast("Yes. BEV is an accurate estimate of crash severity.",
 );
 
 BEGIN_TEXT
-In a simplified, 2D collision, a red car ($m1 kg) travelling $v1_kmh km/hr crashed into the rear end of a parked blue car ($m2 kg, $v2_kmh km/hr). Crush measurements taken from the red vehicle following the collision were as follows: $PAR C1 = $C1_mm mm, C2 = $C2 cm, C3 = $C3 cm, and C4 = $C4 cm. $PAR You may assume that A = $A \(N/cm\), B = $B \(N/cm^2\), and the width of the red car is $width1_mm mm. Assume the crush spans the width of the red vehicle. 
+In a simplified, 2D frontal collision, a red car ($m1 kg) travelling $v1_kmh km/hr crashed into the rear end of a parked blue car ($m2 kg, $v2_kmh km/hr). Crush measurements taken from the red vehicle following the collision were as follows: $PAR C1 = $C1 cm, C2 = $C2 cm, C3 = $C3 cm, and C4 = $C4 cm. $PAR You may assume that A = $A \(N/cm\), B = $B \(N/cm^2\), and the width of the red car is $width1_mm mm. Assume the crush spans the width of the red vehicle. 
 $PAR
-\{image("UBC-BME-INJ-20-022.png", width => 498, height => 291)\} 
+\{image("UBC-BME-INJ-20-022.png", width => 491, height => 296)\} 
 $PAR
 a) What is the barrier equivalent velocity (BEV) for the red car in km/hr? $BR
 \(BEV\) = \{ans_rule(10)\} km/hr 
