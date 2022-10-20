@@ -46,10 +46,10 @@ $showPartialCorrectAnswers = 1;
 #
 Context("Numeric");
 
-$Fz1 = -6500;
-$My1 = -52; 
-$Fz2 = -2500;
-$My2 = -100; 
+$Fz1 = -7000;
+$My1 = -40; 
+$Fz2 = -8000;
+$My2 = -80; 
 
 $Fzc = 6160;
 $Myc = 135;
