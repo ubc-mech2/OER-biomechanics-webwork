@@ -80,8 +80,8 @@ $BBOLD At time 10 ms: $EBOLD $BR
 \(\quad \circ\) \(v_{head,COG}\) = $vheadCOG10 \(m/s\) $BR
 \(\quad \circ\) \(v_{T1}\) = $vT1_10 \(m/s\) $BR
 $PAR
-\(NIC_{max_{5 ms}}\) = \{ans_rule(10)\} \(m/s^2\) $BR
-\(NIC_{max_{10 ms}}\) = \{ans_rule(10)\} \(m/s^2\)
+\(NIC_{max_{5 ms}}\) = \{ans_rule(10)\} \(m^2/s^2\) $BR
+\(NIC_{max_{10 ms}}\) = \{ans_rule(10)\} \(m^2/s^2\)
 $PAR 
 \{ $mc1->print_q() \}
 $BR
