@@ -80,7 +80,7 @@ b) Assuming the force-time function below is applied by the deceleration ram at 
 \(Impulse\) = \{ans_rule(10)\} Ns $BR
 \{ 
 knowlLink("Hint", 
-value=>'Use the conservation of linear momentum/impulse') 
+value=>'Impulse is the area under the force-time curve') 
 \}
 $PAR
 c) What is the magnitude of average deceleration applied over the time interval used in part b)?
