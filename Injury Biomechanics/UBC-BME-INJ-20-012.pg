@@ -74,7 +74,7 @@ Context()->texStrings;
 BEGIN_TEXT
 \{ image( "UBC-BME-INJ-20-012.png", width=>200, height=>230 ) \}
 $PAR
-a) Determine the vehicle speed associated with the following crush pattern (uniform crush of $c cm on 50% of vehicle front). Assume \(A = $A\) \(N/cm\), \(B = $B\) \(N/cm^2\), width = \($width_mm mm\), and mass = \($m kg\).
+a) Determine the vehicle speed associated with the following crush pattern (uniform crush of $c cm on 50% of vehicle front). Assume \(A = $A\) \(N/cm\), \(B = $B\) \(N/cm^2\), vehicle width = \($width_mm mm\), and vehicle mass = \($m kg\).
 $PAR
 \(E\) = \{ans_rule(10)\} J
 $BR
