@@ -73,11 +73,11 @@ $PAR
 $BR
 \{ $mc2->print_a() \}
 $PAR
-c) Calculate a HIC15 for the acceleration plot below: $BR
+c) Calculate a HIC15 for the acceleration plot below (15 ms window only): $BR
 \{image("UBC-BME-INJ-20-024-1.png", width => 500, height=> 383)\} $PAR
 HIC15 = \{ans_rule(10)\} 
 $PAR
-d) Calculate a HIC36 for the acceleration plot below: $BR
+d) Calculate a HIC36 for the acceleration plot below (36 ms window only): $BR
 \{image("UBC-BME-INJ-20-024-2.png", width => 500, height=> 373)\} $PAR
 HIC36 = \{ans_rule(10)\}
 END_TEXT
